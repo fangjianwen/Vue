@@ -1,9 +1,9 @@
 ﻿
 var config = {//配置
 
-    apiBaseUrl: "http://dealapi.1234okle.com",//请求接口基本路径
-    //apiBaseUrl: "http://localhost:9297",//请求接口基本路径
-    appId: "wx08a0fccd00b145f1",//微信公众号AppId
+   
+    apiBaseUrl: "http://localhost:9297",//请求接口基本路径
+    appId: "",//微信公众号AppId
     devOpenId: "oGePYvgb57J5fzVroDtCAEffXjPg",//开发openId  oGePYvgb57J5fzVroDtCAEffXjPg  
     localStorageKey_SearchWords: "search_keywords",//localStorage key 搜索关键字
     localStorageKey_AuthReturnUrl: "auth_return_url",//localStorage key //登录成功后跳转
