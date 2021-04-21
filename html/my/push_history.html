@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+  <meta charset="UTF-8">
+  <meta content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport">
+    <title>订阅内容</title>
+    
+    <link rel="stylesheet" href="../css/common.css?v=0112_2" />    
+    <link rel="stylesheet" href="../css/search/search_result.css?v=0113" />
+    <link rel="stylesheet" href="../css/myfollow/subscription_detail.css?v=0113" />
+    <link rel="stylesheet" href="../css/myfollow/push_history.css?v=0113" />
+    <link href="../css/weui.css" rel="stylesheet" />
+    <style type="text/css">
+        .help-modal {
+            display:block;
+        }
+        .deal-title {
+            font-weight:bold;
+            color:black;
+        }
+        .list-box {
+            margin-bottom:80px;
+        }
+        .keywords_tbb {
+            display:block;
+        }
+        .greybg {
+             display:block;
+        }
+    </style>
+</head>
+<body>
+   <div id="app" v-cloak>
+    <div class="container" style="padding:0;height:100%;">
+        
+         <div class="tab">
+            <a class="tab-item " href="subscription_list.html">订阅设置</a>
+            <a class="tab-item " href="push_setting.html">推送设置</a>
+            <div class="tab-item  active">订阅内容</div>
+        </div>
+        <div class="tab_level2">
+            
+                    <a class="tab-item"  v-for="(item, index) in subscriptionList" :class="{'active':requestPar.subId==item.id}" v-on:click="setSubId(item.id)" >{{item.title}}</a>
+                
+                   
+                
+        </div>
+        
+        <div class="push_scroll_div" style="padding:0.4rem;overflow-y:scroll;flex:1;"  @scroll="handleScroll($event)">
+        <div class="set">
+            <div class="header item">
+                <div class="name">去除关键词</div>
+                <img class="help" src="../images/myfollow/help.png" alt="" v-on:click="showTipDiv=true">
+            </div>
+            <div class="item item_select item_select_title" v-on:click="showEditKeyowrdDivTitle=true">
+                <div class="name">标题</div>
+                <div class="desc">{{requestPar.keywordTitle}}</div>
+                <div class="select-list">
+
+                </div>
+            </div>
+            <div style="border-bottom: 0 none;" class="item item_select item_select_detail" v-on:click="showEditKeyowrdDivDetail=true">
+                <div class="name" >内容</div>
+                <div class="desc" >{{requestPar.keywordDetail}}</div>
+                <div class="select-list">
+                </div>
+            </div>
+        </div>
+        
+        <div class="title">
+                    <div class="left">
+                        共 <span class="total">{{totalCount}}</span> 条信息
+                    </div>
+                    <div class="right">
+                        <div class="zhongbiao btn" :class="{'active':requestPar.stageId=='1'}" v-on:click="setStageId('1')">中标</div>
+                        <div class="zhaobiao btn"  :class="{'active':requestPar.stageId=='0'}" v-on:click="setStageId('0')">招标</div>
+                    </div>
+                </div>
+                <div class="tab-box">
+            
+                <div class="tab-item" v-show="item.count>0||item.name=='全部'" v-for="(item, index) in dealTypeList" :class="{'active':requestPar.typeId==item.id}" v-on:click="setTypeId(item.id)">
+                    {{item.name}}
+                    <span class="num" v-show="showNum&&item.count>0">{{item.count}}</span>
+                </div>
+
+            
+        </div>
+        <div class="list-box list-box-auto">
+            <div class="list-item" v-for="(item, index) in list" >
+                            <div class="name"><a :href="'../deal/detail.html?id='+item.id">{{index+1}} <em v-html="item.titleshow" class="deal-title"></em></a></div>
+                            <div class="desc">
+                                <div class="tag">
+                                    <span v-if="item.type_name!=''&&item.type_name!=null" class="type-name">{{item.type_name}}</span>
+                                     <span class="province" v-if="item.platform==''">{{item.province}}{{item.city}}</span> 
+                                     <span class="province" v-if="item.platform!=''">{{item.platform}}</span> 
+                                     <span v-if="item.stage_id==0">招标</span> 
+                                     <span v-if="item.stage_id==1" class="stage_zhongbiao">中标</span> 
+                                     <span v-if="item.stage_id==2">变更</span>
+                                     <span v-if="item.stage_id==3">开标</span>
+                                     <span v-if="item.stage_id==4">废标</span> 
+                                     <span v-if="item.amount_control!=''">{{item.amount_control}}</span> 
+                                     <span v-if="item.follow_count>0">关注:{{item.follow_count}}人</span> 
+                                </div>
+                            </div>
+                            <div class="time_show">
+                                <div class="time_item" v-if="item.deal_time!=''">
+                                    <img src="../images/deal/deal_time.png"/>{{item.deal_time}}
+                                    
+                                </div>
+                                <div class="time_item" v-if="item.end_time!=''">
+                                    <img src="../images/deal/end_time.png"/>{{item.end_time_f}}
+                                </div>
+                                 <div class="time_item daoshu"  v-if="item.end_time!=''">
+                                    <img src="../images/deal/countdown.png"/>
+                                     {{item.count_down_time}}
+                                </div>
+
+
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                            <!-- 加载中 -->
+                            <div class="loading" v-show="loading">
+                                    <div class="loader-15"></div>
+
+                             </div>
+                            <div class="weui-loadmore weui-loadmore_line" v-show="isLoadAll">
+                             <span class="weui-loadmore__tips">没有更多了</span>
+                             </div>
+                             <div class="weui-loadmore weui-loadmore_line" v-show="showNoData">
+                                 <span class="weui-loadmore__tips">暂时没有数据</span>
+                </div>
+        </div>
+       </div>
+    </div>
+
+    <!-- 提示 -->
+        <div class="help-modal" v-show="showTipDiv">
+        <div class="content">
+            <div class="text">比如贵司不涉及铁路业务，也不具备设计综合甲级资质，可在《标题》关键词输入“铁路”，《内容》关键词输入“设计综合甲级”，来排除您不想要的项目</div>
+            <div class="btn close" v-on:click="showTipDiv=false">关闭</div>
+        </div>
+    </div>
+
+      <!-- 回到顶部 -->
+        <div class="zk zktop">
+            <a class="zkbtn" v-on:click="toTop"><img src="../images/my/top.png"></a>
+    </div>
+
+
+    <!-- 关键词编辑 标题 -->
+        <div class="greybg" v-show="showEditKeyowrdDivTitle"></div>
+        <div class="keywords_tbb" v-show="showEditKeyowrdDivTitle">
+                <div class="content" style="height:auto;">
+                    <div class="title">标题关键字编辑</div>
+                    <div class="keywords selected">
+                        <div class="keyword" v-for="(item, index) in pushKeywordListTitle" >
+                            <span class="value">{{item}}</span>
+                            <span class="delete" v-on:click="delKeywordTitle(item)"></span>
+                        </div>
+                    </div>
+                    <div class="add-keyword" style="width:auto;">
+                        <img src="../images/setting/plus.png" alt="">
+                        <input type="text" placeholder="请输入关键字" v-model="pushKeywordInput" style="height:auto;">
+                        <div class="add-btn" v-on:click="addKeywordTitle">添加</div>
+                    </div>
+                    <div class="handles">
+                          <a class="btn edit keywordsedit" v-on:click="updateKeywordTitle">确定</a>
+                    </div>
+                </div>
+            </div>
+       
+
+           <!-- 关键词编辑 详情-->
+        <div class="greybg" v-show="showEditKeyowrdDivDetail"></div>
+        <div class="keywords_tbb" v-show="showEditKeyowrdDivDetail">
+                <div class="content" style="height:auto;">
+                    <div class="title">详情关键字编辑</div>
+                    <div class="keywords selected">
+                        <div class="keyword" v-for="(item, index) in pushKeywordListDetail" >
+                            <span class="value">{{item}}</span>
+                            <span class="delete" v-on:click="delKeywordDetail(item)"></span>
+                        </div>
+                    </div>
+                    <div class="add-keyword" style="width:auto;">
+                        <img src="../images/setting/plus.png" alt="">
+                        <input type="text" placeholder="请输入关键字" v-model="pushKeywordInputDetail" style="height:auto;">
+                        <div class="add-btn" v-on:click="addKeywordDetail">添加</div>
+                    </div>
+                    <div class="handles">
+                          <a class="btn edit keywordsedit" v-on:click="updateKeywordDetail">确定</a>
+                    </div>
+                </div>
+            </div>
+        <!-- 底部导航栏 -->
+        <vue-footer selecttab="我的"></vue-footer>
+
+    </div>
+</body> 
+<script src="../scripts/flexible.js"></script>
+<script src="../scripts/jquery-3.5.1.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="../plugs/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/my/push_history.js?v=01142"></script>
+</html>

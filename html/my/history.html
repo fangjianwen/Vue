@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport">
+    <title>我的足迹</title>
+    <link rel="stylesheet" href="../css/common.css?v=1124">
+    <link rel="stylesheet" href="../css/search/search_result.css?v=0113">
+    <link href="../css/weui.css" rel="stylesheet" />
+    <style>
+        .zk {
+            bottom:2.42rem;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+
+        <div class="container" style="padding-bottom: 0rem;">
+            <div class="search-options" style="padding-bottom: 0.4rem;">
+                <div class="bx">
+                    <div class="search-box">
+                        <input v-model="requestPar.keyword" type="text" class="keyword" placeholder="请输入关键词搜索" v-on:click="showHistoryKeyword=true">
+                        <div class="search-icon" v-on:click="setKeyword"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 历史搜索 -->
+            <div class="search-modal search-modal-key" style="margin-top: 0.5rem;display:block;" v-show="showHistoryKeyword">
+                <div class="modal modal-4">
+                    <div class="main">
+                        <div class="content">
+                            <div class="key_title">
+                                <div>历史搜索</div>
+                                <div style="font-size: 0.32rem; color: #333;" class="key_clear" v-on:click="clearHistoryKeyword" v-show="historyKeywordList.length>0">清除</div>
+                            </div>
+                            <div class="key_item_list">
+                                <div class="key_item" v-for="(item, index) in historyKeywordList" @click="requestPar.keyword = item;setKeyword();">
+                                  
+                                    {{item}}
+
+                                </div>
+                                <div v-show="historyKeywordList.length==0">暂时没有搜索记录</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="handles">
+                        <div class="confirm key_close" v-on:click="showHistoryKeyword=false">关闭</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-box" style="padding-bottom: 1.7rem;"  @scroll="handleScroll($event)" v-show="!showHistoryKeyword">
+                <div class="bx no-data"  v-show="showNoHistory">
+                    <div class="no-data-box">
+                        <div class="title">您尚未有浏览记录</div>
+                    </div>
+                </div>
+
+                <div class="bx have-data">
+                    <div class="list-box-title" style="padding: 0.2rem 0.4rem 0.4rem;">
+                         
+                           
+                        <div class="left">
+                            共 <span class="num">{{totalCount}}</span> 条信息
+                        </div>
+                        <div class="right">
+                            <div :class="{'active':requestPar.stageId=='0'}" v-on:click="setStageId('0')">招标</div>
+                            <div :class="{'active':requestPar.stageId=='1'}" v-on:click="setStageId('1')">中标</div>
+                           <!-- <div :class="{'active':requestPar.stageId=='2'}" v-on:click="setStageId('2')">变更</div>
+                            <div :class="{'active':requestPar.stageId=='3'}" v-on:click="setStageId('3')">开标</div>
+                            <div :class="{'active':requestPar.stageId=='4'}" v-on:click="setStageId('4')">废标</div>-->
+                           
+                        </div>
+
+
+
+                    </div>
+                     <!-- 数据列表 -->
+                    <div class="list-list">
+                        
+                        <div class="list-item" v-for="(item, index) in list" >
+                            <div class="name">{{index+1}}<a :href="'../deal/detail.html?id='+item.id"> {{item.titleshow}}</a></div>
+                            <div class="desc">
+                                <div class="tag">
+                                    <span v-if="item.type_name!=''&&item.type_name!=null" class="type-name">{{item.type_name}}</span>
+                                   
+                                     <span class="province" v-if="item.platform==''">{{item.province}}{{item.city}}</span> 
+                                     <span class="province" v-if="item.platform!=''">{{item.platform}}</span> 
+
+                                     <span v-if="item.stage_id==0">招标</span> 
+                                     <span v-if="item.stage_id==1" class="stage_zhongbiao">中标</span> 
+                                     <span v-if="item.stage_id==2">变更</span>
+                                     <span v-if="item.stage_id==3">开标</span>
+                                     <span v-if="item.stage_id==4">废标</span> 
+                                     <span v-if="item.amount_control!=''">{{item.amount_control}}</span> 
+                                     <span v-if="item.follow_count>0">关注:{{item.follow_count}}人</span> 
+                                </div>
+                            </div>
+                            <div class="time_show">
+                                <div class="time_item" v-if="item.deal_time!=''">
+                                    <img src="../images/deal/deal_time.png"/>{{item.deal_time}}
+                                    
+                                </div>
+                                <div class="time_item" v-if="item.end_time!=''">
+                                    <img src="../images/deal/end_time.png"/>{{item.end_time_f}}
+                                </div>
+                                 <div class="time_item daoshu"  v-if="item.end_time!=''">
+                                    <img src="../images/deal/countdown.png"/>
+                                     {{item.count_down_time}}
+                                </div>
+
+
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                            <!-- 加载中 -->
+                            <div class="loading" v-show="loading">
+                                    <div class="loader-15"></div>
+
+                             </div>
+                            <div class="weui-loadmore weui-loadmore_line" v-show="isLoadAll">
+                             <span class="weui-loadmore__tips">没有更多了</span>
+                             </div>
+                    </div>
+
+                   
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- 回到顶部 -->
+        <div class="zk zktop">
+            <a class="zkbtn" v-on:click="toTop"><img src="../images/my/top.png"/></a>
+        </div>
+       <vue-footer selecttab="我的"></vue-footer>
+    </div>
+</body>
+<script src="../scripts/flexible.js"></script>
+<script src="../scripts/jquery-3.5.1.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="../plugs/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/my/history.js?v=0113"></script>
+<!--        <script>
+            $(".list-box").scroll(function () {
+                var h = $(this).height();//div可视区域的高度
+                var sh = $(this)[0].scrollHeight;//滚动的高度，$(this)指代jQuery对象，而$(this)[0]指代的是dom节点
+                var st = $(this)[0].scrollTop;//滚动条的高度，即滚动条的当前位置到div顶部的距离
+                if (h + st >= sh - 1) {
+                    if (vm.requestPar.pageIndex * vm.requestPar.pageSize >= vm.totalCount) {
+                        vm.isLoadAll = true;
+                        console.log("加载完成");
+                        return;
+                    }
+                    vm.requestPar.pageIndex++;
+                    vm.getDataList();
+
+                }
+            })
+    </script>-->
+</html>

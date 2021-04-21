@@ -1,0 +1,372 @@
+.container {
+	padding: 0;
+	background-color: #ECF4FF;
+	display: flex;
+	flex-direction: column
+}
+
+.container .tab1 {
+	display: flex;
+	justify-content: space-between;
+	background-color: #ffffff;
+	font-size: .3733rem;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 0 .4rem
+}
+
+.container .tab1 .tab-item {
+	line-height: 1.0667rem;
+	color: #333333;
+	text-decoration: none
+}
+
+.container .tab1 .tab-item.active {
+	border-bottom: .0133rem solid #2C78E8;
+	color: #2C78E8
+}
+
+.container.no-data .bx {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center
+}
+
+.container.no-data .bx .title {
+	font-size: .4267rem;
+	color: #666666;
+	text-align: center;
+	padding-bottom: .1333rem
+}
+
+.container.no-data .bx .tip-item {
+	color: #999999;
+	font-size: .3733rem;
+	text-align: center;
+	margin-top: .4rem
+}
+
+.container.no-data .bx .tip-item .red {
+	color: #F4462F
+}
+
+.tab {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	font-size: .3733rem;
+	height: 1.0667rem;
+	background-color: #ffffff
+}
+
+.tab .tab-item {
+	line-height: 1.0667rem
+}
+
+.tab .tab-item .tag {
+	width: .2667rem;
+	height: .2667rem;
+	border-radius: 50%;
+	display: inline-block;
+	margin-right: .1333rem
+}
+
+.tab .tab-item.all.active {
+	border-bottom: .0133rem solid #2C78E8;
+	color: #2C78E8
+}
+
+.tab .tab-item.item.active {
+	background-color: #ECF4FF;
+	padding: 0 .2667rem;
+	border-radius: .4rem .4rem 0 0
+}
+
+.warn {
+	width: 1.0667rem;
+	line-height: 1.0667rem;
+	text-align: center;
+	font-size: .3733rem;
+	color: #FE3919;
+	width: 100%;
+	box-shadow: 0 0 20px 0 #e5ecf6
+}
+
+.handles {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+	align-items: center;
+	font-size: .3733rem;
+	box-sizing: border-box;
+	padding: 0 .4rem;
+	margin-top: .5333rem
+}
+
+.handles .setting-btns {
+	display: flex;
+	align-items: center;
+	color: #2C78E8
+}
+
+.handles .setting-btns .common {
+	padding-right: .4rem
+}
+
+.handles .setting-btns .special {
+	padding-left: .4rem
+}
+
+.handles .settings-btns {
+	display: flex;
+	align-items: center
+}
+
+.handles .settings-btns .delete {
+	margin-left: .4rem;
+	display: none
+}
+
+.handles .multiple,.handles .delete {
+	width: 1.2rem;
+	height: .64rem;
+	background: #ecf4ff;
+	border: .0267rem solid #666;
+	border-radius: .1333rem;
+	color: #666666;
+	display: flex;
+	justify-content: center;
+	align-items: center
+}
+
+.list {
+	flex: 1;
+	overflow-y: scroll;
+	box-sizing: border-box;
+	padding: 0 .4rem;
+	padding-top: .5333rem
+}
+
+.list .item {
+	padding: .4rem;
+	box-sizing: border-box;
+	background-color: #ffffff;
+	border-radius: .1333rem;
+	margin-bottom: .2667rem;
+	position: relative
+}
+
+.list .item.set {
+	margin-bottom: .5333rem
+}
+
+.list .item.set::after {
+	content: "";
+	display: block;
+	width: .5067rem;
+	height: .5067rem;
+	border-radius: 50%;
+	background-image: url(../../imgs/setting/unselected.png);
+	background-size: 100% 100%;
+	position: absolute;
+	left: -0.2533rem;
+	top: -0.2533rem
+}
+
+.list .item.set.active::after {
+	background-image: url(../../imgs/setting/selected.png)
+}
+
+.list .item .name {
+	font-size: .3733rem;
+	text-align: justify
+}
+
+.list .item .desc {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: .32rem
+}
+
+.list .item .time {
+	font-size: .32rem;
+	color: #999999
+}
+
+.list .item .tag {
+	display: flex
+}
+
+.list .item .tag span {
+	display: inline-block;
+	color: #ffffff;
+	padding: .0667rem .1333rem;
+	border-radius: .04rem;
+	font-size: .32rem;
+	margin-right: .1333rem
+}
+
+.list .item .tag span:nth-child(1) {
+	background-color: #4D8DEB
+}
+
+.list .item .tag span:nth-child(2) {
+	background-color: #F7CF2F
+}
+
+.list .item .tag span:nth-child(3) {
+	background-color: #38C75D
+}
+
+.list .item .tag span:nth-child(4) {
+	background-color: #EF6B31
+}
+/*# sourceMappingURL=./remind_setting.css.map */
+.tab {
+              /*display: flex;*/
+	justify-content: space-between;
+	background-color: #ffffff;
+	font-size: 0.3733rem;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 0 0.4rem;
+	width: 100%;
+	overflow-x: scroll;
+	white-space: nowrap;
+}
+
+.tab .tab-item {
+	line-height: 1.0667rem;
+	margin-right: 0.1rem;
+	display: inline-block;
+	padding: 0 0.4rem;
+}
+
+.tab .tab-item.active {
+              /*border-bottom: 0.0133rem solid #2C78E8;
+              color: #2C78E8;*/
+	background: #ECF4FF;
+	border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
+}
+
+.subscribe,.no-data {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	padding: .5333rem 0;
+	padding-top: 0.5333rem;
+	overflow: hidden;
+	padding-top: 0;
+}
+
+.subscribe .subscribe-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: .4267rem;
+	width: 4.8rem;
+	height: 1.1733rem;
+	background-color: #2C78E8;
+	border-radius: .5867rem;
+	color: #ffffff;
+}
+
+.subscribe .subscribe-btn img {
+	width: .32rem;
+	height: .32rem;
+	margin-right: .2667rem;
+}
+
+.subscribe .list {
+	flex: 1;
+    /*overflow-y: scroll;*/
+	margin-bottom: .4rem;
+}
+
+.list-box .list-item .desc .tag span.stage_zhongbiao {
+	background: #f4462f;
+	color: #fff;
+}
+
+.time_show {
+	margin-top: 0.32rem;
+	padding-bottom: 0.32rem;
+	font-size: 0.32rem;
+}
+
+.time_item {
+	line-height: 24px;
+	width: 30%;
+	float: left;
+}
+
+.time_item.daoshu {
+	width: 40%;
+}
+
+.time_item img {
+	height: 18px;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+
+.time_item i {
+	font-weight: bold;
+	font-style: normal;
+}
+
+.lev-item-marginb {
+	margin-bottom: 0.2rem;
+}
+
+.list-box .no-data {
+	font-size: 0.4rem;
+	padding-top: 1rem;
+}
+
+.tab_top {
+	display: flex;
+	justify-content: space-between;
+	background-color: #ffffff;
+	font-size: 0.42667rem;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 0 0.4rem;
+	border-bottom: 1px solid #eee;
+}
+
+.tab_top .tab_item_top {
+	padding:0.53333rem 0;
+                height: 0.4rem;
+                line-height: 0.4rem;
+}
+
+.tab_top .tab_item_top.active {
+	border-bottom: 2px solid #297cf7;
+	color: #297cf7;
+}
+
+.list-box {
+	padding: 0.4rem;
+}
+
+.list-item-corner {
+	width: 0;
+	height: 0;
+	border-top: 0.9rem solid #fff;
+	border-right: 0.9rem solid transparent;
+	position: absolute;
+	left: 0;
+	top: 0;
+	border-radius: 0.1333rem 0 0 0;
+}
+
+.list-box .list-item {
+	position: relative;
+}

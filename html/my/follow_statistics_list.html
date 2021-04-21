@@ -1,0 +1,501 @@
+﻿
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>
+	我的关注来源
+</title>
+    <link rel="stylesheet" href="../css/common.css?v=0114" />
+    <link rel="stylesheet" href="../css/myfollow/myfollow.css?v=0111_2" />
+    <link rel="stylesheet" href="../css/setting/remind_setting.css?v=0111_2" />
+    <link rel="stylesheet" href="../css/search/data_distribution.css?v=0111_2" />
+    <link href="../css/weui.css" rel="stylesheet" />
+    <style type="text/css">
+        /*.container .increased, .container .total {
+    width: 25%;
+}*/
+        .nav-box{padding:0 0.4rem;border-bottom: 1px solid #eee;}
+         .proper-item{display:block;padding:0.32rem;position:relative;background:#fff;margin-bottom:0.3rem;}
+         .proper-item-title{font-size:0.3733rem;font-weight:bold;margin-bottom:0.2rem;max-width:90%;}
+         .proper-item-info{font-size:0.32rem;color:#666;}
+         .proper-item-info i{font-style:normal;color:#F4462F;}
+         .proper-item img{position:absolute;right:0.5rem;top:0.85rem;width:0.2rem;}
+         .pannel,.list-box{padding: 0.4rem;}
+         .tab {
+    display: flex;
+    justify-content: space-around;
+    background-color: #ffffff;
+    font-size: 0.3733rem;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 0.4rem;
+    width: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;height: 1.0667rem;
+}
+         .tab .tab-item {
+    line-height: 1.0667rem;
+    margin-right: 0.1rem;
+    display: inline-block;
+    padding: 0 0.4rem;
+}
+         .tab .tab-item.active {
+    border-bottom: 0.0133rem solid #2C78E8;
+    color: #FE3919;
+    background: #ECF4FF;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+         .container{background:none;}
+
+         /*#2C78E8;*/
+       .search-options {
+            padding-top: 0.4rem;
+            background: #2C78E8;
+            color: #fff;
+        }
+       .search-options .category-2 .cat span{color:#fff;}
+         
+         .search-options .category-2{font-size:0.45rem;padding:0.4rem 0rem}
+         /*.container .header{background:url(/static/imgs/search/bgshadow.png) 0 0 no-repeat;
+                            background-size:cover;
+                            background-position:center;
+         }*/
+        .container .list{margin-top:-0.1rem;}
+         .imgitem{width:1.5rem;text-align:center;}
+          .imgitem img{width:0.42rem;vertical-align:middle;height:0.42rem;}
+          .list-item .ib{display:inline-block;}
+          .container .list .list-item{display:block;white-space:nowrap;line-height: 1.0667rem;}
+          .container .list .list-item .province{display:inline-block;}
+          .container-list{display:flex;justify-content: center;overflow-y:hidden;flex:1;}
+          .head_container{display:flex;justify-content: center;
+                          background:#fff;
+                            height:1.22667rem;
+                            line-height:1.22667rem;
+          }
+          .container .header.header_left{width:2.5rem;}
+
+          .container .list-right{overflow-x:scroll;overflow-y:scroll;}
+          .container .list-right.nosx{overflow-x:hidden;}
+          .container .list-right.nosy{overflow-y:hidden;}
+          .container-list .list{padding:0;flex:initial;}
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+
+
+            <div  style="display: none;" v-show="loading">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <span class="weui-primary-loading weui-primary-loading_transparent weui-icon_toast">
+              <span class="weui-primary-loading__dot"></span>
+            </span>
+            <p class="weui-toast__content">加载中</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="nav-box">
+            <a  class="nav-item p-4 active">关注来源</a>
+            <a  href="follow_project_list.html" class="nav-item p-1">关注项目</a>
+            <a  href="remind_list.html" class="nav-item p-2">提醒设置</a>            
+            
+        </div>
+        
+        <div class="content">
+            
+            
+            
+            <div id="div4" class="main p-4">
+                 <div class="head_container">
+                   <div class="header header_left">
+                     <div class="header_item province" style="padding-left:0.4rem">地区</div>
+                    </div>
+                    <div class="header header_right" style="overflow-x:scroll;white-space:nowrap;flex:1;">               
+                        <div class="header_item increased">今日增额</div>
+                        <div class="header_item total">总额</div>
+                        <div class="header_item increased increased_today">今日增量</div>
+                        <div class="header_item total">总量</div>
+                        <div class="header_item imgitem">关注</div>
+                        <div class="header_item imgitem">订阅</div>
+                        <div class="header_item imgitem">搜索</div>
+                    </div>
+                </div>
+                    
+                        <div class="container-list">
+                                            <div class="list list-left" style="width:2.5rem;overflow-y:scroll;overflow-x:hidden;-webkit-overflow-scrolling:auto;">
+
+                </div>
+            
+            
+               <div class="list list-right" style="flex:1;">
+
+               </div>
+                            
+                        </div>
+   
+                        
+                   
+            </div>
+        </div>
+    </div>
+
+   
+
+        
+        <!-- 底部导航栏 -->
+        <vue-footer selecttab="我的"></vue-footer>
+    </div>
+
+   
+</body>
+    <script src="../scripts/flexible.js"></script>
+<script src="../scripts/zepto.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/my/follow_statistics_list.js?v=0114"></script>
+ <script type="text/javascript">
+        var leftScrolling = false;
+        var rightScrolling = false;
+        var slefttop = 0;
+        var srighttop = 0;
+        var srightleft = 0;
+        var timerleft = null;
+        var timerright = null;
+        var lastleft = 0;
+        var lasttop = 0;
+
+        var searchResult = {
+            init: function () {
+             
+                //this.Link();
+                this.showFollow();
+
+            },
+            Link: function () {
+                //$('body').on('click', '.subscription_link', function () {
+                //    var region = $(this).attr("data-region");
+                //    region = region.replace("=", "|");
+                //    //typestr
+                //    var value = $(this).attr("data-value");
+                //    if (value != undefined)
+                //        value = value.replace("=", "|");
+                //    else
+                //        value = "";
+                //    window.location.href = '../my/subscription_add.html?region=' + encodeURIComponent(encodeURIComponent(region))
+                //    + '&value=' + encodeURIComponent(encodeURIComponent(value));
+                //})
+                //$('body').on('click', '.search_link', function () {
+                //    var region = $(this).attr("data-region");
+                //    region = region.replace("=", "|");
+                //    //typestr
+                //    var value = $(this).attr("data-value");
+                //    if (value != undefined)
+                //        value = value.replace("=", "|");
+                //    else
+                //        value = "";
+                //    window.location.href = '../deal/list.html?region=' + encodeURIComponent(encodeURIComponent(region))
+                //    + '&value=' + encodeURIComponent(encodeURIComponent(value));
+                //})
+            },
+            // 显示关注弹窗
+            showFollow: function () {
+                $('.list').on('click', ' .followbtn', function () {
+                    var btn = $(this);
+                    var url = config.apiBaseUrl + "/Api/Statistics/Follow.ashx";
+                    var timer = null;
+                    var data = "statistics_id=" + $(this).attr("data-id");
+                    var name = $(this).attr("data-name");
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: data,
+                        dataType: "json",
+                        headers: {
+                            Accept: "application/json; charset=utf-8",
+                            OpenId: getOpenId()
+                        },
+                        success: function (data) {
+                            if (data.status) {
+                                if (data.data != "") {
+                                    if (btn.html().indexOf("follow.png") > -1) {
+                                        $('.toast').css({ display: 'block' });
+                                        $('.toast').html("关注 " + name + " 成功");
+                                        clearInterval(timer);
+                                        timer = setTimeout(function () {
+                                            $('.toast').css({ display: 'none' })
+                                        }, 1500);
+                                        btn.html("<img src='../images/statistics/followed.png'>");
+                                    }
+                                    else {
+                                        $('.toast').css({ display: 'block' });
+                                        $('.toast').html("取消 " + name + " 关注");
+                                        clearInterval(timer);
+                                        timer = setTimeout(function () {
+                                            $('.toast').css({ display: 'none' })
+                                        }, 1500);
+                                        btn.html("<img src='../images/statistics/follow.png'>");
+                                    }
+                                }
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                        }
+                    });
+
+
+                })
+            },
+        }
+        searchResult.init()
+
+        $(".list-right").scroll(function () {
+            if (!leftScrolling) {
+                rightScrolling = true;
+                leftScrolling = false;
+
+                clearTimeout(timerright);
+                timerright = setTimeout(isRightScrollEnd, 500);
+                lasttop = srighttop;
+                lastleft = srightleft;
+
+                if ($(".list-right").scrollLeft() < 0)
+                    $(".list-right").scrollLeft(0);
+                if ($(".list-right").scrollTop() < 0)
+                    $(".list-right").scrollTop(0);
+
+                srighttop = $(".list-right").scrollTop();
+                srightleft = $(".list-right").scrollLeft();
+
+                if ($(".list-right").scrollLeft() > 0)
+                    $(".header_right").scrollLeft($(".list-right").scrollLeft());
+                if ($(".list-right").scrollTop() > 0)
+                    $(".list-left").scrollTop($(".list-right").scrollTop());
+
+            }
+        });
+
+        $(".list-left").scroll(function () {
+            if (!rightScrolling) {
+                rightScrolling = false;
+                leftScrolling = true;
+
+                clearTimeout(timerleft);
+                timerleft = setTimeout(isLeftScrollEnd, 500);
+                slefttop = $(".list-left").scrollTop();
+
+                $(".list-right").scrollTop($(".list-left").scrollTop());
+            }
+        });
+
+        function isLeftScrollEnd() {
+            var t2 = $(".list-left").scrollTop();
+            if (t2 == slefttop) {
+                leftScrolling = false;
+                console.log("clearTimeout_left");
+                $(".list-right").removeClass("nosy");
+                $(".list-right").removeClass("nosx");
+                //$(".subshow-2").html("remove");
+                $(".list-left").scrollTop($(".list-right").scrollTop());
+                clearTimeout(timerleft);
+            }
+        }
+
+        function isRightScrollEnd() {
+            var t2 = $(".list-right").scrollTop();
+            if (t2 == srighttop) {
+                rightScrolling = false;
+                console.log("clearTimeout_right");
+                $(".header_right").scrollLeft($(".list-right").scrollLeft());
+                $(".list-left").scrollTop($(".list-right").scrollTop());
+                $(".list-right").removeClass("nosy");
+                $(".list-right").removeClass("nosx");
+                //$(".subshow-2").html("remove");
+                clearTimeout(timerright);
+            }
+        }
+
+        function cutString(i) {
+            if (i.length > 4)
+                return i.substr(0, 4) + "...";
+            else
+                return i;
+        }
+
+
+        function setSelect(obj) {//搜索
+
+            if ($(obj).data("dist-name") != "") {//区级别
+
+                var arryDist = [];
+                var dist = {
+                    id: $(obj).data("dist-id"),
+                    name: $(obj).data("dist-name")
+
+                }
+                arryDist.push(dist);
+                console.log("arryDist", arryDist);
+                localStorage.setItem(config.localStorageKey_Dist, JSON.stringify(arryDist));
+                return;
+            }
+            else if ($(obj).data("city-name") != "") {//市级别
+                var arryCity = [];
+                var city = {
+                    id: $(obj).data("city-id"),
+                    name: $(obj).data("city-name")
+
+                }
+                arryCity.push(city);
+                console.log("arryCity", arryCity);
+                localStorage.setItem(config.localStorageKey_City, JSON.stringify(arryCity));
+                return;
+            }
+            else if ($(obj).data("province-id") != "") {//省级别
+
+                var provinceId = $(obj).data("province-id");
+                var citys = [];
+                requestApiSync("/Api/Area/CityList.ashx", "POST", { provinceId: provinceId }, function (resp) {
+
+                    if (resp.status) {
+
+                        for (var i = 0; i < resp.data.list.length; i++) {
+                            var city = {
+                                id: resp.data.list[i].id,
+                                name: resp.data.list[i].name,
+                            };
+                            citys.push(city);
+                        }
+                    }
+                    console.log("citys", citys);
+                    localStorage.setItem(config.localStorageKey_City, JSON.stringify(citys));
+                   
+
+                })
+                return;
+
+            }
+           if ($(obj).data("region") != "") {//大区级别
+
+               var region = $(obj).data("region");
+               var citys = [];
+               //
+               requestApiSync("/Api/Area/GetAreaLevel3.ashx", "POST", { areaLevel1Name: "省市县", areaLevel2Name: region }, function (resp) {
+
+                   if (resp.status) {
+
+                       for (var i = 0; i < resp.data.length; i++) {
+
+
+                           //
+                           requestApiSync("/Api/Area/GetAreaLevel4.ashx", "POST", { areaLevel1Name: "省市县", areaLevel2Name: region, areaLevel3Name: resp.data[i].name }, function (resp) {
+
+                               if (resp.status) {
+
+                                   for (var i = 0; i < resp.data.length; i++) {
+
+                                       citys.push(resp.data[i]);
+
+                                   }
+
+                               }
+
+                           }
+
+       )
+                           //
+
+
+                       }
+
+
+                   }
+
+               }
+
+)
+
+
+
+               //
+               console.log("citys", citys);
+               localStorage.setItem(config.localStorageKey_City, JSON.stringify(citys));
+               return;
+
+
+
+
+           }
+           if ($(obj).data("hotregion") != "") {//热点区域级别
+
+               var region = $(obj).data("hotregion");
+               var citys = [];
+               //
+               requestApiSync("/Api/Area/GetAreaLevel3.ashx", "POST", { areaLevel1Name: "HOT热点", areaLevel2Name: region }, function (resp) {
+
+                   if (resp.status) {
+
+                       for (var i = 0; i < resp.data.length; i++) {
+
+
+                           //
+                           requestApiSync("/Api/Area/GetAreaLevel4.ashx", "POST", { areaLevel1Name: "HOT热点", areaLevel2Name: region, areaLevel3Name: resp.data[i].name }, function (resp) {
+
+                               if (resp.status) {
+
+                                   for (var i = 0; i < resp.data.length; i++) {
+
+                                       citys.push(resp.data[i]);
+
+                                   }
+
+                               }
+
+                           }
+
+       )
+                           //
+
+
+                       }
+
+
+                   }
+
+               }
+
+)
+
+
+
+               //
+               console.log("citys", citys);
+               localStorage.setItem(config.localStorageKey_City, JSON.stringify(citys));
+              
+
+           }
+           return;
+
+        }
+        
+        function subSearch(obj) {//搜索
+
+            setSelect(obj);
+            window.location.href = "../deal/list.html";
+
+        }
+
+        function subscription(obj) {//订阅
+
+
+            setSelect(obj);
+            window.location.href = "../my/subscription.html";
+
+
+
+        }
+        </script>
+</html>
+

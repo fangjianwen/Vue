@@ -1,0 +1,631 @@
+﻿
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8" />
+    <meta content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport" />
+    <title>
+	数据分布统计
+</title>
+    <link rel="stylesheet" href="../css/mui.min.css" />
+    <link rel="stylesheet" href="../css/app.css" />
+    <link rel="stylesheet" href="../css/mui.picker.css" />
+    <link rel="stylesheet" href="../css/mui.poppicker.css" />
+    <link rel="stylesheet" href="../css/mui.dtpicker.css" />
+    <link rel="stylesheet" href="../css/common.css?v=1218" />
+    <link rel="stylesheet" href="../css/search/data_distribution.css?v=1218" />
+    <link rel="stylesheet" href="../css/search/data.css?v=1218" />
+    <link href="../css/font-awesome.css?v=1" rel="stylesheet" />
+    <link href="../css/weui.css" rel="stylesheet" />
+    <style type="text/css">
+        .search-options {
+            /* padding-top: 0.2rem;
+            padding-bottom: 0.2rem; */
+            font-weight: bold;
+            color: #fff;
+            border-bottom: 1px solid #F2F2F2;
+            height: 1.22667rem;
+            line-height: 1.22667rem;
+            padding-top: 0;
+            padding-left: 0.2rem;
+            padding-right: 0.2rem;
+        }
+
+            .search-options .category-2 .cat span {
+                color: #333;
+                max-width: 72%;
+            }
+
+                .search-options .category-2 .cat span.active {
+                    color: #2C78E8;
+                }
+
+            .search-options .category-2 {
+                font-size: 0.42667rem;
+                padding: 0;
+                font-weight: normal;
+            }
+
+        /* .container .header {
+            height: 1.3rem;
+            line-height: 1.3rem;
+        } */
+
+        .container .list {
+            margin-top: -0.1rem;
+        }
+
+        .imgitem {
+            width: 1.5rem;
+            text-align: center;
+        }
+
+            .imgitem img {
+                width: 0.42rem;
+                vertical-align: middle;
+                height: 0.42rem;
+            }
+
+        .list-item .ib {
+            display: inline-block;
+        }
+
+        .container .list .list-item {
+            display: block;
+            white-space: nowrap;
+            line-height: 1.0667rem;
+        }
+
+            .container .list .list-item .province {
+                display: inline-block;
+            }
+
+        .container-list {
+            display: flex;
+            justify-content: center;
+            overflow-y: hidden;
+            flex: 1;
+        }
+
+        .head_container {
+            display: flex;
+            justify-content: center;
+            /* background: url(../images/search/bgshadow.png) 0 0 no-repeat; 
+            background-size: 100% 100%;*/
+            background: #fff;
+            height: 1.22667rem;
+            line-height: 1.22667rem;
+            
+            font-weight: normal;
+        }
+
+        .container .header.header_left {
+            width: 2.5rem;
+        }
+
+        .container .list-right {
+            overflow-x: scroll;
+            overflow-y: scroll;
+        }
+
+            .container .list-right.nosx {
+                overflow-x: hidden;
+            }
+
+            .container .list-right.nosy {
+                overflow-y: hidden;
+            }
+        .region-item {
+            margin-left:5px !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+
+      
+    <div  style="display: none;" v-show="loading">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <span class="weui-primary-loading weui-primary-loading_transparent weui-icon_toast">
+              <span class="weui-primary-loading__dot"></span>
+            </span>
+            <p class="weui-toast__content">加载中</p>
+        </div>
+    </div>
+       <div class="container" style="padding-bottom:1.7rem;">
+            <div class="search-options">
+                <div class="category-2">
+                    <div index="1"  class="cat project" :class="{'active':showCountrySelectDiv}" v-on:click="showCountrySelectDiv=!showCountrySelectDiv;showTypeSelectDiv=false;showAreaSelectDiv=false">
+                        <span class="subshow-1">中国</span>
+                        <img class="cat-icon" src="../images/search/cat_icon.png" alt="">
+                    </div>
+                    <div index="2" class="cat project" >
+                        <span class="subshow-2">列表式</span>
+                    
+                    </div>
+                    <div index="3" class="cat project" :class="{'active':showTypeSelectDiv}" v-on:click="showTypeSelectDiv=!showTypeSelectDiv;showCountrySelectDiv=false;showAreaSelectDiv=false">
+                        <span  class="subshow-3" :class="{'active':selectTypeName!='行业'}">{{selectTypeName}}</span>
+                        <img class="cat-icon" src="../images/search/cat_icon.png" alt="">
+                    </div>
+                    <div index="4" class="cat project" :class="{'active':showAreaSelectDiv}" v-on:click="showAreaSelectDiv=!showAreaSelectDiv;showCountrySelectDiv=false;showTypeSelectDiv=false">
+                        <span  class="subshow-4" :class="{'active':selectAreaName!='地区'}">{{selectAreaName}}</span>
+                        <img class="cat-icon" src="../images/search/cat_icon.png" alt="">
+                    </div> 
+                
+                
+                </div>
+            
+            </div>
+            <div class="bg" v-show="showCountrySelectDiv||showTypeSelectDiv||showAreaSelectDiv"></div>
+            <div class="search-modal search-modal-1"  v-show="showCountrySelectDiv">
+                <div index="1" class="modal modal-1">
+                    <div class="main">
+                        <div class='date-box'>
+                            <div class="data-item active"  v-on:click="showCountrySelectDiv=false">中国</div>
+                            <a class="data-item"  href="tel:18210762747">海外定制</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-modal search-modal-3" v-show="showTypeSelectDiv">
+                <div index="3" class="modal modal-3 model-type-2">
+                    <div class="main main2">
+                    
+                        <div class="level-2" style="display:block;">
+
+
+
+                          <!--  <a class="region-item-big data-region" >全部</a>-->
+                        
+                            <a class="region-item data-region" v-for="(item, index) in dealTypeList" :class="{'active':requestPar.typeId==item.id}" v-on:click="setTypeId(item)">{{item.name}}</a>
+                            
+                                
+                            
+                        </div>
+                     
+                        <div class="clear"></div>
+                    </div>
+                </div>            
+            </div>
+             <!-- 地区 -->
+            <div class="search-modal search-modal-4" v-show="showAreaSelectDiv">
+                <div index="4" class="modal modal-4 model-type-1">
+                    <div class="main main1">
+                        <div class="level-1">
+<!--                            <div class="item level-item-1" :class="{'active':areaSelectTab==1}" v-on:click="setAreaTab(1)">
+                                <div class="name" >全国</div>                            
+                            </div>-->
+                            <div class="item level-item-1" :class="{'active':areaSelectTab==2}" v-on:click="setAreaTab(2)">
+                                <div class="name">HOT热点</div>                            
+                            </div>
+                             <div class="item level-item-1" :class="{'active':areaSelectTab==3}" v-on:click="setAreaTab(3)">
+                                <div class="name">国家级</div>                            
+                            </div>
+                            <div class="item level-item-1" :class="{'active':areaSelectTab==4}"  v-on:click="setAreaTab(4)">
+                                <div class="name">省市县</div>                            
+                            </div>
+                            <div class="item level-item-1" :class="{'active':areaSelectTab==5}" v-on:click="setAreaTab(5)">
+                                <div class="name">全球订阅</div>                            
+                            </div>
+                        </div>
+                         <div class="level-2" style="display:block;" v-show="areaSelectTab==1">
+                                    <a class="region-item-big data-region" >全部</a>
+                        </div>
+
+                        <div class="level-2 level-hot" v-show="areaSelectTab==2">
+                                
+                   <a  class="region-item data-region"  v-for="(item, index) in regionHotList"  :class="{'active':requestPar.hotRegion==item.name}" v-on:click="setHotRegion(item)">{{item.name}}</a>
+                                        
+                                           
+                                        
+                      </div>
+                        <div class="level-2" v-show="areaSelectTab==3">
+                                    <a class="region-item-big data-region" :class="{'active':requestPar.region=='国家级'}" v-on:click="setRegion('国家级')">国家级</a>
+                                </div>
+                        <div class="level-2 level-spt" v-show="areaSelectTab==4">
+                                
+                <a  class="region-item data-region"  v-for="(item, index) in regionList"  :class="{'active':requestPar.region==item.name}" v-on:click="setRegion(item.name)">{{item.name}}</a>
+
+
+                                        
+                      </div>
+                         <div class="level-2 level-zfcg" v-show="areaSelectTab==5">
+                                    <a class="region-item-big" href="tel:18210762747">全球订阅</a>
+                                </div>
+                        <div class="clear"></div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="head_container">
+                <div class="header header_left">
+                     <div class="header_item province" style="padding-left:0.4rem">地区</div>
+                </div>
+                <div class="header header_right" style="overflow-x:scroll;white-space:nowrap;flex:1;">               
+                    <div class="header_item increased">今日增额</div>
+                    <div class="header_item total">总额</div>
+                    <div class="header_item increased increased_today">今日增量</div>
+                    <div class="header_item total">总量</div>
+                    <div class="header_item imgitem">关注</div>
+                    <div class="header_item imgitem">订阅</div>
+                    <div class="header_item imgitem">搜索</div>
+                </div>
+            </div>
+        
+            <div class="container-list">
+                <div class="list list-left" style="width:2.5rem;overflow-y:scroll;overflow-x:hidden;-webkit-overflow-scrolling:auto;">
+
+                </div>
+            
+            
+               <div class="list list-right" style="flex:1;">
+
+               </div>
+            
+             </div>
+        
+        </div>
+       <!-- 底部导航栏 -->
+       <vue-footer selecttab="大局观"></vue-footer> 
+    </div>
+</body>
+<script src="../scripts/flexible.js"></script>
+<script src="../scripts/zepto.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/statistics/statistics.js"></script>
+<script type="text/javascript">
+            var url = config.apiBaseUrl + "/Api/Statistics/Statistics.ashx";
+            var leftScrolling = false;
+            var rightScrolling = false;
+            var slefttop = 0;
+            var srighttop = 0;
+            var srightleft = 0;
+            var timerleft = null;
+            var timerright = null;
+            var lastleft = 0;
+            var lasttop = 0;
+
+            var searchResult = {
+                init: function () {
+                    this.showInner();
+                    this.Link();
+                    this.priceHandle();
+                    this.timeSearch();
+                    this.showFollow();
+
+                },
+                // 子显示
+                showInner: function () {
+                    $('body').on('click', ' .region', function () {
+                        var btn = $(this);
+                        var nextbtn = $(this).parent().next();
+                        var index = $(this).parent().index();
+                        var level_index = 1;
+
+                        console.log(index);
+                        var nextbtn_right = $('.list-right').children().eq(index + 1);
+                        if ($(this).parent().hasClass("list_item_province")) {
+                            nextbtn_right = $('.list-right').children().eq($(this).parent().parent().index()).children().eq(index + 1);
+
+                        }
+                        if ($(this).parent().hasClass("list_item_city")) {
+                            nextbtn_right = $('.list-right').children().eq($(this).parent().parent().parent().index()).children().eq($(this).parent().parent().index()).children().eq(index + 1);
+                        }
+
+
+                        //console.log(nextbtn_right);
+
+                        if (nextbtn.hasClass("dn")) {
+                            nextbtn.removeClass("dn");
+                            nextbtn_right.removeClass("dn");
+                            $(this).addClass("active");
+                            $(this).find("i").removeClass("fa-angle-down").addClass("fa-angle-up");
+                        }
+                        else {
+                            nextbtn.addClass("dn");
+                            nextbtn_right.addClass("dn");
+                            $(this).removeClass("active");
+                            $(this).find("i").removeClass("fa-angle-up").addClass("fa-angle-down");
+                        }
+
+                        if (nextbtn.html() == "") {
+                            var name = $(this).find("span").html();
+                            var level_id = $(this).attr("data-fk");
+                            var type = $(this).attr("data-type");
+                            var oid = $(this).attr("data-id");
+                            var typestr = $(this).attr("data-region");
+
+                            //console.log("level_id=" + level_id);
+                            //console.log("id=" + oid);
+                            //console.log("type=" + type);
+                            //console.log("typestr=" + typestr);
+
+                            if (level_id == "0")
+                                level_id = "1";
+                            else if (level_id == "1")
+                                level_id = "2";
+                            else if (level_id == "2")
+                                level_id = "3";
+
+
+
+
+                            if (level_id == "1")
+                                css = "list_item_province";
+                            if (level_id == "2")
+                                css = "list_item_city";;
+                            if (level_id == "3")
+                                css = "list_item_district";
+                            var data = typestr + "&objectId=" + oid
+                             + "&typeId=" + vm.requestPar.typeId + "&level=" + level_id;
+                            if (level_id != "" && parseInt(level_id) == 3) {
+                                console.log("level_id", level_id);
+                               // return;
+                            }
+                            vm.loading = true;
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                data: data,
+                                dataType: "json",
+                                headers: {
+                                    Accept: "application/json; charset=utf-8",
+                                    OpenId: getOpenId()
+                                },
+                                beforeSend: function () {
+                                    //$("#noDataShow").css("display", "none");
+                                    //filter();
+                                },
+                                success: function (data) {
+                                    vm.loading = false;
+                                    if (data.status) {
+                                        var json = data.data.list;
+
+                                        var projecthtml = '';
+                                        var listhtml = '';
+                                        var name = "";
+
+                                        for (var i = 0; i < json.length; i++) {
+
+
+                                            var id = "";
+                                            var arrow = '<i class="fa fa-angle-down"></i>';
+                                            var value = "";
+
+                                            if (level_id == "1") {
+                                                id = json[i].province_id;
+                                                name = json[i].province_name;
+                                                value = 'province=' + json[i].province_id;
+                                            }
+                                            if (level_id == "2") {
+                                                id = json[i].city_id;
+                                                name = json[i].city_name;
+                                                value = 'city=' + json[i].city_id;
+                                                if (json[i].province_name == "京" || json[i].province_name == "津" || json[i].province_name == "沪"
+                                                    || json[i].province_name == "渝" || json[i].province_name == "港" || json[i].province_name == "澳")
+                                                    arrow = "";
+                                                if (json[i].city_name == "省本级")
+                                                    arrow = "";
+                                                if (json[i].city_name.indexOf("县") > -1)
+                                                    arrow = "";
+                                            }
+                                            if (level_id == "3") {
+                                                id = json[i].district_id;
+                                                name = json[i].district_name;
+                                                arrow = "";
+                                                value = 'district=' + json[i].district_id;
+                                            }
+
+                                            projecthtml += '<div class="list-item ' + css + '">';
+
+                                            //projecthtml += '<div class="province region ib" data-region="' + typestr + '" data-fk="' + level_id + '"  data-id="' + id + '" >';
+                                            //projecthtml += '<span>' + cutString(name) + arrow + '</span>';
+
+                                            //projecthtml += ' </div>'
+
+                                            projecthtml += ' <div class="increased ib">' + json[i].amount_today_show + '</div>'
+                                            projecthtml += ' <div class="total ib">' + json[i].amount_all_show + '</div>'
+                                            projecthtml += ' <div class="increased increased_today ib tc">' + json[i].count_today_show + '</div>'
+                                            projecthtml += ' <div class="total ib">' + json[i].count_today_show + '</div>'
+                                            projecthtml += ' <div class="imgitem followbtn ib" data-type-id="3" data-name=' + name + ' data-id=' + json[i].id + ' ><img src="../images/statistics/' + json[i].follow + '" /></div>'
+                                            projecthtml += ' <div class="imgitem ib subscription_link" data-type-id="3" data-value="' + value + '" data-region="' + typestr + '" data-name=' + name + ' onclick="regionSubChild(this)"><img src="../images/statistics/' + 'fast.png' + '" /></div>'
+                                            projecthtml += ' <div class="imgitem ib search_link" data-type-id="3" data-value="' + value + '" data-region="' + typestr + '" data-name=' + name + ' onclick="regionChildSearch(this)"><img src="../images/statistics/' + 'search.png' + '" /></div>'
+                                            projecthtml += ' </div>'
+
+                                            projecthtml += ' <div class="list-item-inner dn"></div>'
+
+
+                                            listhtml += '<div class="list-item ' + css + '">';
+                                            listhtml += '<div class="province region ib" data-region="' + typestr + '" data-fk="' + level_id + '"  data-id="' + id + '" >';
+                                            listhtml += '<span>' + cutString(name) + arrow + '</span>';
+                                            listhtml += ' </div>'
+                                            listhtml += ' </div>'
+                                            listhtml += ' <div class="list-item-inner dn"></div>'
+                                        }
+
+
+
+                                        nextbtn.html(listhtml);
+                                        nextbtn_right.html(projecthtml);
+                                    }
+                                },
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                                }
+                            });
+                        }
+
+
+                    })
+                },
+                Link: function () {
+                    //$('body').on('click', '.subscription_link', function () {
+                    //    var region = $(this).attr("data-region");
+                    //    region = region.replace("=", "|");
+                    //    //typestr
+                    //    var value = $(this).attr("data-value");
+                    //    if (value != undefined)
+                    //        value = value.replace("=", "|");
+                    //    else
+                    //        value = "";
+                    //    window.location.href = '../my/subscription_add.html?region=' + encodeURIComponent(encodeURIComponent(region))
+                    //    + '&value=' + encodeURIComponent(encodeURIComponent(value));
+                    //})
+                    //$('body').on('click', '.search_link', function () {
+                    //    var region = $(this).attr("data-region");
+                    //    region = region.replace("=", "|");
+                    //    //typestr
+                    //    var value = $(this).attr("data-value");
+                    //    if (value != undefined)
+                    //        value = value.replace("=", "|");
+                    //    else
+                    //        value = "";
+
+                    //    //window.location.href = '../deal/list.html?region=' + encodeURIComponent(encodeURIComponent(region))
+                    //    //+ '&value=' + encodeURIComponent(encodeURIComponent(value));
+
+                    //   // console.log('../deal/list.html?region=' + region + '&value=' + value); 
+                     
+
+                    //})
+                },
+                // 显示关注弹窗
+                showFollow: function () {
+                    $('.list').on('click', ' .followbtn', function () {
+                        var btn = $(this);
+                        var url = config.apiBaseUrl + "/Api/Statistics/Follow.ashx";
+                        var timer = null;
+                        var data = "statistics_id=" + $(this).attr("data-id");
+                        var name = $(this).attr("data-name");
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: data,
+                            dataType: "json",
+                            headers: {
+                                Accept: "application/json; charset=utf-8",
+                                OpenId: getOpenId()
+                            },
+                            success: function (data) {
+                                if (data.status) {
+                                    if (data.data != "") {
+                                        if (btn.html().indexOf("follow.png") > -1) {
+                                            $('.toast').css({ display: 'block' });
+                                            $('.toast').html("关注 " + name + " 成功");
+                                            clearInterval(timer);
+                                            timer = setTimeout(function () {
+                                                $('.toast').css({ display: 'none' })
+                                            }, 1500);
+                                            btn.html("<img src='../images/statistics/followed.png'>");
+                                        }
+                                        else {
+                                            $('.toast').css({ display: 'block' });
+                                            $('.toast').html("取消 " + name + " 关注");
+                                            clearInterval(timer);
+                                            timer = setTimeout(function () {
+                                                $('.toast').css({ display: 'none' })
+                                            }, 1500);
+                                            btn.html("<img src='../images/statistics/follow.png'>");
+                                        }
+                                    }
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                            }
+                        });
+
+
+                    })
+                },
+                // 时间搜索
+                timeSearch: function () {
+
+
+                },
+                // 金额设置
+                priceHandle: function () {
+
+                },
+            }
+            searchResult.init()
+           
+            $(".list-right").scroll(function () {
+                if (!leftScrolling) {
+                    rightScrolling = true;
+                    leftScrolling = false;
+
+                    clearTimeout(timerright);
+                    timerright = setTimeout(isRightScrollEnd, 500);
+                    lasttop = srighttop;
+                    lastleft = srightleft;
+
+                    if ($(".list-right").scrollLeft() < 0)
+                        $(".list-right").scrollLeft(0);
+                    if ($(".list-right").scrollTop() < 0)
+                        $(".list-right").scrollTop(0);
+
+                    srighttop = $(".list-right").scrollTop();
+                    srightleft = $(".list-right").scrollLeft();
+
+                    if ($(".list-right").scrollLeft() > 0)
+                        $(".header_right").scrollLeft($(".list-right").scrollLeft());
+                    if ($(".list-right").scrollTop() > 0)
+                        $(".list-left").scrollTop($(".list-right").scrollTop());
+
+                }
+            });
+
+            $(".list-left").scroll(function () {
+                if (!rightScrolling) {
+                    rightScrolling = false;
+                    leftScrolling = true;
+
+                    clearTimeout(timerleft);
+                    timerleft = setTimeout(isLeftScrollEnd, 500);
+                    slefttop = $(".list-left").scrollTop();
+
+                    $(".list-right").scrollTop($(".list-left").scrollTop());
+                }
+            });
+
+            function isLeftScrollEnd() {
+                var t2 = $(".list-left").scrollTop();
+                if (t2 == slefttop) {
+                    leftScrolling = false;
+                    console.log("clearTimeout_left");
+                    $(".list-right").removeClass("nosy");
+                    $(".list-right").removeClass("nosx");
+                    //$(".subshow-2").html("remove");
+                    $(".list-left").scrollTop($(".list-right").scrollTop());
+                    clearTimeout(timerleft);
+                }
+            }
+
+            function isRightScrollEnd() {
+                var t2 = $(".list-right").scrollTop();
+                if (t2 == srighttop) {
+                    rightScrolling = false;
+                    console.log("clearTimeout_right");
+                    $(".header_right").scrollLeft($(".list-right").scrollLeft());
+                    $(".list-left").scrollTop($(".list-right").scrollTop());
+                    $(".list-right").removeClass("nosy");
+                    $(".list-right").removeClass("nosx");
+                    //$(".subshow-2").html("remove");
+                    clearTimeout(timerright);
+                }
+            }
+
+            function cutString(i) {
+                if (i.length > 4)
+                    return i.substr(0, 4) + "...";
+                else
+                    return i;
+            }
+
+        </script>
+</html>

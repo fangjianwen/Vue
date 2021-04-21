@@ -1,0 +1,146 @@
+﻿
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>
+	我的关注项目
+</title>
+    <link rel="stylesheet" href="../css/common.css?v=0111_2" />
+    <link rel="stylesheet" href="../css/setting/remind_setting.css?v=0111_2" />
+    <link rel="stylesheet" href="../css/search/search_result.css?v=0113" />
+    <link href="../css/weui.css" rel="stylesheet" />
+    <style type="text/css">
+        .container {
+            overflow-y: scroll;
+        }
+
+        .warn {
+            width: 100%;
+            color: #FFEED8;
+            background-color: #FFEED8;
+            color: #E77E2A;
+            height: .9333rem;
+            line-height: .9333rem;
+            text-align: center;
+            font-size: .3733rem;
+            font-weight: bold;
+        }
+
+        .list-item-corner {
+            width: 0.9rem;
+            height: 0.9rem;
+            /*background-image: url(/static/imgs/setting/000000.png);*/
+            background-size: 100% 100%;
+            position: absolute;
+            border: 0;
+            left: 0;
+            top: 0;
+        }
+
+        .tab .tab-item {
+            margin-right: 5px;
+        }
+        /*.list-item-corner{border-top-color:#000;}*/
+        .list-box {
+            margin-bottom: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+
+
+
+    <div class="container">
+        <div class="tab_top">
+            <a class="tab_item_top " href="follow_statistics_list.html">关注来源</a>
+            <div class="tab_item_top active" >关注项目</div>
+            <a class="tab_item_top" href="remind_list.html">提醒设置</a>
+            
+        </div>
+        <div  class="tab">
+            <a class="tab-item item" :class="{'active':requestPar.remindId==item.id}" v-for="(item, index) in remindList" v-on:click="setRemindId(item.id)"><span class="tag" v-bind:style="{ 'background-color': item.color }"></span>{{item.text}}({{item.count}})</a>
+        </div>
+        <div  class="warn" style="display:none;">
+
+
+        </div>
+        <div class="list-box" @scroll="handleScroll($event)">
+                             <div class="list-item" v-for="(item, index) in list">
+                            <div class="name"><a :href="'../deal/detail.html?id='+item.id">{{index+1}}&nbsp;{{item.titleshow}}</a></div>
+                            <div class="desc">
+                                <div class="tag">
+                                    <span v-if="item.type_name!=''&&item.type_name!=null" class="type-name">{{item.type_name}}</span>
+                                    <span class="province" v-if="item.platform==''">{{item.province}}{{item.city}}</span> 
+                                     <span class="province" v-if="item.platform!=''">{{item.platform}}</span> 
+                                     <span v-if="item.stage_id==0">招标</span> 
+                                     <span v-if="item.stage_id==1" class="stage_zhongbiao">中标</span> 
+                                     <span v-if="item.stage_id==2">变更</span>
+                                     <span v-if="item.stage_id==3">开标</span>
+                                     <span v-if="item.stage_id==4">废标</span> 
+                                     <span v-if="item.amount_control!=''">{{item.amount_control}}</span> 
+                                    
+                                </div>
+                                <div class="time" v-if="item.follow_count>0">关注：{{item.follow_count}}人</div>
+                            </div>
+                            <div class="time_show">
+                                <div class="time_item"  v-if="item.deal_time!=''">
+                                    <img src="../images/deal/deal_time.png"/>{{item.deal_time}}
+                                    
+                                </div>
+                                <div class="time_item" v-if="item.end_time!=''">
+                                    <img src="../images/deal/end_time.png"/>{{item.end_time_f}}
+                                </div>
+                                 <div class="time_item daoshu"  v-if="item.end_time!=''">
+                                    <img src="../images/deal/countdown.png"/>
+                                     {{item.count_down_time}}
+                                </div>
+
+
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+
+                <!-- 加载中 -->
+                <div class="loading" v-show="loading">
+                   <div class="loader-15"></div>
+                 </div>
+                 <div class="weui-loadmore weui-loadmore_line" v-show="isLoadAll">
+                  <span class="weui-loadmore__tips">没有更多了</span>
+                  </div>
+                <div class="weui-loadmore weui-loadmore_line" v-show="showNoData">
+                     <span class="weui-loadmore__tips">暂时没有数据</span>
+                </div>
+        </div>        
+    </div>
+
+     <!-- 底部导航栏 -->
+        <vue-footer selecttab="我的"></vue-footer>
+    </div>
+
+</body>
+<script src="../scripts/flexible.js"></script>
+<script src="../scripts/zepto.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/my/follow_project_list.js?v=0112"></script>
+<!--            <script>
+                $(".list-box").scroll(function () {
+                    var h = $(this).height();//div可视区域的高度
+                    var sh = $(this)[0].scrollHeight;//滚动的高度，$(this)指代jQuery对象，而$(this)[0]指代的是dom节点
+                    var st = $(this)[0].scrollTop;//滚动条的高度，即滚动条的当前位置到div顶部的距离
+                    if (h + st >= sh - 1) {
+                        if (vm.requestPar.pageIndex * vm.requestPar.pageSize >= vm.totalCount) {
+                            vm.isLoadAll = true;
+                            console.log("加载完成");
+                            return;
+                        }
+                        vm.requestPar.pageIndex++;
+                        vm.getDataList();
+
+                    }
+                })
+    </script>-->
+</html>

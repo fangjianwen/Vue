@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="UTF-8">
+    <meta content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport">
+    <title>申请开票</title>    
+    <link rel="stylesheet" href="../css/style.css?v=0610">
+    <style type="text/css">
+        .invoice_choose{height:13rem;}
+        .wx_btn{height:0.8rem;line-height:0.8rem;width:3.5rem;text-align: center;background: #04BE02;color: #ffffff;border-radius: 10px;}
+        .invoice_wx{padding:0rem 0.4rem 0.5rem;display: flex;justify-content: flex-end;}
+        .invoice_choose_title{margin-bottom: 0.2rem;}
+        </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+    <div class="greybg" v-show="choosing"></div>
+     <div class="container container_invoice" v-show="!editing">
+            <div class="invoice_item">
+                <div class="invoice_orderno">
+                    订单编号：{{orderInfo.order_no}}
+                </div>
+                <div class="invoice_name">
+                    {{orderInfo.name}}
+                </div>
+                 <div class="invoice_amount">
+                    开票金额：<i>{{orderInfo.amount}}元</i>
+                </div>
+            </div>
+          <div class="invoice_item">
+                <div class="invoice_list_item">
+                    <div class="cat">发票类型</div>
+                    <div class="select">增值税电子普通发票</div>
+                </div>
+              <div class="invoice_list_item invoice_head_type_show" >
+                    <div class="cat" style="margin-right:0.4rem;">抬头类型</div>
+                    <div class="icon_left" :class="{'active':head_type_select=='个人或事业单位'}" v-on:click="choose('个人或事业单位')">个人或事业单位</div>
+                    <div class="icon_left" :class="{'active':head_type_select=='企业'}" v-on:click="choose('企业')">企业</div>
+                </div>
+              <div class="invoice_list_item">
+                    <div class="cat">发票抬头</div>
+                    <div class="select invoice_head_show" v-on:click="choose('')">{{head_select}}</div>
+                </div>
+               <div class="invoice_list_item">
+                    <div class="cat">设为默认抬头</div>
+                    <div class="icon  invoice_icon_apply" :class="{'active':default_select}" v-on:click="changeDefaultSelect()"></div>
+                </div>
+            </div>
+         <div class="invoice_item">
+              <div class="invoice_list_item">
+                    <div class="cat">发票内容</div>
+                    <div class="icon_left active">明细</div>
+                </div>
+            </div>
+         <div class="invoice_handle">
+             <div class="invoice_btn invoice_btn_apply" v-on:click="invoiceApply()">提交申请</div>
+             <a class="invoice_btn invoice_btn_back" href="../my/myorder.html">不开发票</a>
+         </div>        
+
+    </div>
+
+        <div class="invoice_choose" v-show="choosing">
+             <div class="invoice_choose_delete" v-on:click="choosing=false"></div>
+            <div class="invoice_choose_title">抬头选择</div>
+            <div class="invoice_wx"><div class="wx_btn" v-on:click="chooseWxTitle()">选择微信发票抬头</div></div>
+            <div class="invoice_choose_list">
+                
+                         <div class="invoice_choose_item" v-for="(item, index) in list">
+                             <div class="invoice_choose_item_left" v-on:click="chooseInvoice(item)">
+                                 <div class="invoice_choose_item_left_title">
+                                     {{item.invoice_head}}
+                                     <span v-if="item.is_default" class="default">默认</span>
+                                    </div>
+                                 <div class="invoice_choose_item_left_type">{{item.head_type}}</div>
+                             </div>
+                            <div class="invoice_choose_item_right invoice_choose_item_edit" v-on:click="editInvoice(item)">编辑</div>
+                        </div>
+                    
+                
+            </div>
+            <div class="invoice_handle" style="margin-top:0.3rem;padding:0 0.5rem;">
+                 <div class="invoice_btn invoice_btn_add" v-on:click="editInvoice(null)">添加新抬头</div>
+             </div>  
+         </div>
+
+        <div class="container containeradd container_invoice" v-show="editing" > 
+          <div class="invoice_item">
+              <input type="hidden" class="invoice_id" value="0" />
+              <input type="hidden" class="invoice_id_edit" value="0" />
+              <input type="hidden" class="order_id" id="order_id" runat="server" value="0" />
+              <div class="invoice_list_item">
+                    <div class="cat" style="margin-right:0.4rem;">抬头类型</div>
+                    <div class="icon_left  invoice_add_head_type" :class="{'active':head_type_edit=='个人或事业单位'}" v-on:click="head_type_edit='个人或事业单位'">个人或事业单位</div>
+                  <div class="icon_left  invoice_add_head_type" :class="{'active':head_type_edit=='企业'}" v-on:click="head_type_edit='企业'">企业</div>
+                </div>
+              <div class="invoice_list_item">
+                    <div class="cat">发票抬头</div>
+                    <div class="input">
+                        <input type="text" class="invoice_head" placeholder="抬头名称" />
+                    </div>
+                </div>
+               <div class="invoice_list_item invoice_list_item2">
+                    <div class="cat">税号</div>
+                    <div class="input">
+                        <input type="text" class="tax_no" placeholder="纳税人识别号或社会统一征信代码" />
+                    </div>
+                </div>
+            </div>
+         <div class="invoice_item invoice_item_add2" v-show="head_type_edit == '企业'">
+             <div class="invoice_list_item">
+                    <div class="cat">开户银行</div>
+                    <div class="input">
+                        <input type="text" class="bank_name" placeholder="选填" />
+                    </div>
+                </div>
+             <div class="invoice_list_item">
+                    <div class="cat">银行账户</div>
+                    <div class="input">
+                        <input type="text"  class="bank_no" placeholder="选填" />
+                    </div>
+                </div>
+             <div class="invoice_list_item">
+                    <div class="cat">企业地址</div>
+                    <div class="input">
+                        <input type="text"  class="address" placeholder="选填" />
+                    </div>
+                </div>
+             <div class="invoice_list_item">
+                    <div class="cat">企业电话</div>
+                    <div class="input">
+                        <input type="text"  class="tel" placeholder="选填" />
+                    </div>
+                </div>
+            </div>
+            <div class="invoice_item">
+              <div class="invoice_list_item">
+                    <div class="cat">设为默认</div>
+                    <div class="icon  invoice_icon_add" :class="{'active':edit_default}" v-on:click="edit_default=!edit_default"></div>
+                </div>
+            </div>
+         <div class="invoice_handle">
+             <div class="invoice_btn invoice_btn_add_action" v-on:click="editSave()">完成</div>
+         </div>
+    </div>
+    
+    </div>
+    <script src="../scripts/flexible.js"></script>
+    <script src="../scripts/jquery-3.5.1.min.js"></script>
+    <script src="../scripts/vue.js"></script>
+    <script src="../plugs/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <script src="../scripts/comm.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>  
+    <script src="../scripts/my/invoice.js?v=01182"></script>
+</body>
+</html>

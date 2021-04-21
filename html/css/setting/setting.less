@@ -1,0 +1,117 @@
+.container {
+    padding: 0;
+    background-color: #ECF4FF;
+    display: flex;
+    flex-direction: column;
+}
+.tab {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffffff;
+    font-size: 0.3733rem;
+    // height: 1.1733rem;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 0.4rem;
+    .tab-item {
+        line-height: 1.0667rem;
+        color: #333333;
+        &.active {
+            border-bottom: 0.0133rem solid #2C78E8;
+            color: #2C78E8;
+        }
+    }
+}
+.subscribe {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0.5333rem 0;
+    overflow: hidden;
+    padding-top: 0;
+    .list {
+        flex: 1;
+        overflow-y: scroll;
+        margin-bottom: 0.4rem;
+    }
+    .content {
+        width:9.2rem;
+        height:6.7867rem;
+        background:rgba(255,255,255,1);
+        border-radius:0.1333rem;
+        padding: 0.4rem;
+        box-sizing: border-box;
+        margin-top: 0.4rem;
+        .title {
+            font-size: 0.3733rem;
+            padding-bottom: 0;
+            border-bottom: 1px solid #E6E6E6;
+            input {
+                margin: 0!important;
+                border: 0 none;
+                padding: 0!important;
+            }      
+            
+        }
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.3733rem;
+            height: 1.2rem;
+            border-bottom: 0.0133rem solid #E6E6E6;
+            .select {
+                color: #999999;
+                background-image: url(../../imgs/search/grey_arrow_right.png);
+                background-repeat: no-repeat;
+                background-position: right center;
+                background-size: auto 0.3733rem;
+                padding-right: 0.4rem;
+            }
+        }
+        .handles {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.3733rem;
+            margin-top: 0.4rem;
+            .btn {
+                width:3.7333rem;
+                height:0.8533rem;
+                background:rgba(255,255,255,1);
+                border:0.0267rem solid rgba(102,102,102,1);
+                border-radius:0.4267rem; 
+                color: #666666;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                &.delete {
+                    margin-right: 0.4rem;
+                }
+                &.edit, &.save {
+                    color: #2C78E8;
+                    border-color: #2C78E8;
+                }
+            }
+        }
+    }
+    .subscribe-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.4267rem;
+        img {
+            width: 0.32rem;
+            height: 0.32rem;
+            margin-right: 0.2667rem;
+        }
+        width: 4.8rem;
+        height: 1.1733rem;
+        background-color: #2C78E8;
+        border-radius: 0.5867rem;
+        color: #ffffff;
+    }
+}

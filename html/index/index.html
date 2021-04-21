@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head >
+    <meta charset="UTF-8" />
+    <meta content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport" />
+    <title>投标宝</title>
+    <link rel="stylesheet" href="../css/mui.min.css" />
+    <link rel="stylesheet" href="../css/app.css">
+    <link rel="stylesheet" href="../css/mui.picker.css">
+    <link rel="stylesheet" href="../css/mui.poppicker.css">
+    <link rel="stylesheet" href="../css/mui.dtpicker.css">
+    <link rel="stylesheet" href="../css/style.css?v=0114" />
+    <style type="text/css">
+        .container {
+            background: url(../images/default/bg.png) 0 0 no-repeat #f5f5f5;
+            background-size: contain;
+            padding: 0.35rem 0 1.7rem;
+            height: auto;
+            /*overflow-y:scroll;*/
+        }
+    </style>
+</head>
+     
+<body>
+
+  <div id="app" v-cloak>
+    <div class="container">
+        <div class="header_index">
+            <div class="title_index">投标大数据平台</div>
+            <div class="sub-title">- 网罗全网商机 -</div>
+            <a class="header_fufei" href="../pay/product.html">付费订阅</a>
+        </div>
+        <div class="bx">
+            <a class="search-box" href="../deal/list.html">
+                <div class="search-box-input">请输入关键词搜索 如 市政 土地 医药 矿产</div>
+                <div class="search-icon"></div>
+            </a>
+        </div>
+       <div class="search_his">
+            <div class="search_his_title">快速搜索</div>
+            <div class="search_his_label">
+                <span  v-for="(item, index) in historyKeywordList">
+                    <a :href="'../deal/list.html?keyword='+encodeURI(item)">{{item}}</a> 
+                </span>                    
+            </div>
+        </div>
+        <div class="section">
+            <a class="section_item" href="../deal/list.html?stageId=0">
+                <div class="section_item_icon">
+                    <img src="../images/default/zhaobiao.png" />
+                </div>
+                <div class="section_item_txt">招标查询</div>
+            </a>
+            <a class="section_item" href="../deal/list.html?stageId=1">
+                <div class="section_item_icon">
+                    <img src="../images/default/zhongbiao.png" />
+                </div>
+                <div class="section_item_txt">中标查询</div>
+            </a>
+            <a class="section_item">
+                <div class="section_item_icon">
+                    <img src="../images/default/qidai.png" />
+                </div>
+                <div class="section_item_txt">敬请期待</div>
+            </a>
+            <a class="section_item">
+                <div class="section_item_icon">
+                    <img src="../images/default/qidai.png" />
+                </div>
+                <div class="section_item_txt">敬请期待</div>
+            </a>
+        </div>
+        <div class="ad_default">
+            <a href="../pay/product.html">
+                <img src="../images/default/adv.jpg" />
+            </a>
+        </div>
+        <div class="search_keywords">
+            <div class="search_keywords_title">
+                <div class="search_keywords_t">同行<span>搜索</span></div>
+                <div class="search_keywords_re">
+                    <div class="search_keywords_refresh"  v-on:click="gethotkeywordList">换一批</div>
+                </div>
+            </div>
+            <div class="search_keywords_list" >
+                <a v-for="(item, index) in list" :href="'../deal/list.html?keyword='+encodeURI(item.name)">
+                    <i v-if="index<3">{{index+1}}.</i>
+                    <span v-if="index>=3">{{index+1}}</span>
+                    {{item.name}}
+                </a>    
+            </div>
+        </div>
+    </div>
+
+
+    <a class="history" href="../my/history.html">
+        <img src="../images/deal/history.png" />
+    </a>
+      <vue-footer selecttab="首页"></vue-footer>
+  </div>
+</body>
+    <script src="../scripts/flexible.js"></script>
+    <script src="../scripts/zepto.min.js"></script>
+    <script src="../scripts/vue.js"></script>
+    <script src="../scripts/comm.js"></script>
+    <script src="../scripts/index/index.js?v=0112_"></script>
+</html>

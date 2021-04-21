@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>购买</title>    
+    <link rel="stylesheet" href="../css/style.css?v=0111_1" />
+</head>
+<body>
+    <div id="app" v-cloak>
+    <div class="container container_product">
+        <div class="type-choose">
+            <div class="type-choose-btns">
+                <div class="type-choose-item fl"  v-on:click="setTypeId(2)" >按天购买</div>
+                <div class="type-choose-item fr active"  v-on:click="setTypeId(1)" >按省购买</div>
+                <div class="tag">强烈推荐</div>
+            </div>            
+        </div>
+        <div class="order-list order-list-type1"  v-show="requestPar.typeId == 1">
+            
+                    <div class="order-item" v-for="(item, index) in list">
+                        <div class="tag" :class="item.tag_class">{{item.tag}}</div>
+                        <div class="product_name">{{item.name}}</div>
+                        <div v-if="item.province_count==2" class="price">&yen;{{item.price}}<i>起</i></div> 
+                        <div v-if="item.province_count!=2" class="price">&yen;{{item.price}}</div> 
+                        <div class="single-price">{{item.time_show}}</div>
+                        
+                        <a :href="'buy.html?product_type=1&product='+item.id" class="buy-btn">立即抢购</a>
+                       
+                        <div class="order-line"></div>
+                        <div class="order-info" v-html="item.info">
+                        </div>                      
+                        
+                    </div>
+               
+        </div>
+        <div class="order-list order-list-type2" v-show="requestPar.typeId == 2">
+            
+                    <!-- <div class="order-item">
+                        
+                        <div class="product_name"><%#Eval("name") %></div>
+                        <div class="price-box">
+                            <div class="price-origin">&yen;<%#Eval("price_original") %></div>
+                            <div class="price-save">立省&yen;<%#Eval("price_save") %></div>
+                        </div>--%>
+                        <div class="price">&yen;<%#Eval("price") %></div>                        
+                        <a class="buy-btn" href="pay_action.aspx?product=<%#Eval("id") %>&product_type=2">马上抢购</a>
+                         <div class="order-line"></div>
+                        <div class="order-info">
+                           <p>按推送项目条数收费</p>
+                            <p>不限省份 不限行业</p>
+                            <p>即充即用 用完即止</p>
+                            <p>"流量包"套餐</p>
+                            <p>可以叠加购买</p>
+                            <p class="tips">注意：仅按省购买类型套餐会员享受额外平台优惠政策</p>
+                        </div>  
+                    </div> -->
+               
+        </div>
+        <div class="btn_contact">
+            <a href="tel:182-1076-2747">有问题联系官方</a>
+        </div>
+    </div>
+    <div class="zk" style="bottom:1.82667rem;">
+        <a class="zkbtn" href="../my/home.html"><img class="zkx" src="../images/my/wode.png" /></a>
+    </div>
+    
+</div>
+<script src="../scripts/flexible.js"></script>
+<script src="../scripts/zepto.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="../plugs/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/pay/product.js?v=2"></script>
+</body>
+</html>

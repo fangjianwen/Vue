@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport" />
+    <title>我的订单
+    </title>
+    <link rel="stylesheet" href="../css/style.css?v=?v=0112" />
+    <link href="../css/weui.css" rel="stylesheet" />
+    <style type="text/css">
+        .main .pay-box{height:auto;border:0;}
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <div class="greybg" v-show="showMobile2Div"></div>
+        <div class="mobile_div" v-show="showMobile2Div" >
+            <div class="mobile_input">
+                <!-- <input type="text"   /> -->
+                <textarea v-model="info.mobile2" class="mobileinput" placeholder="额外授权一个号码共享权限"></textarea>
+            </div>
+            <div class="mobile_btn" >
+                <div v-on:click="showMobile2Div=false">取消</div>
+                <div style="border-left:1px solid #e6e6e6;color:#2c78e8;" v-on:click="saveMobile2">保存</div>
+            </div>
+        </div>
+        <div class="container containeruser" style="overflow-y: scroll;" @scroll="handleScroll($event)">
+            <div class="user">
+                <div class="avatar">
+                    <img v-bind:src="info.avatar" alt="">
+                </div>
+                <div class="username">
+                    <div class="name">{{info.name}}</div>
+                    <div class="mobile">
+                        <span class="mobile1">{{info.mobile}}</span>
+                        <span class="mobile2" v-on:click="showMobile2Div=true"><img src="../images/my/add.png">{{info.mobile2 == ""?"额外授权一个号码共享权限":info.mobile2}}</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="nav-box">
+                <a :class="{'active':requestPar.typeId==''}" v-on:click="setTypeId('')" class="nav-item">全部</a>
+                <a :class="{'active':requestPar.typeId=='1'}" v-on:click="setTypeId('1')"  class="nav-item">待审核</a>
+                <a :class="{'active':requestPar.typeId=='2'}" v-on:click="setTypeId('2')" class="nav-item">已支付</a>
+                <a :class="{'active':requestPar.typeId=='3'}" v-on:click="setTypeId('3')" class="nav-item">已开票</a>
+            </div>
+            <div class="list listorder" >
+
+                <div class="item_user" v-for="(item, index) in list">
+                    <div class="header_user">
+                        <div class="time">{{item.add_time}}</div>
+                        <div class="status">{{item.state_show}}</div>
+                    </div>
+                    <div class="main_user">
+
+                        <div class="detail">
+                            <div class="name">{{item.product_name}}</div>
+
+                            <div class='regions' v-if="item.type_id==1&&item.region!=''">
+                                本次选择区域：{{item.region}}
+                            </div>
+                           <div class="expire">
+                                   {{item.expire_time}}
+                                </div>
+                        </div>
+                        <div class="amount">
+                            {{item.amount}}元
+                        </div>
+                    </div>
+                    <div class="handle">
+                       
+
+                            
+                                <a v-if="item.invoice_stage==0&&item.state==2&&item.amount>0" class="order_btn" :href="'invoice.html?id='+item.id">申请开票</a>
+                            
+                            
+                                <a v-if="item.invoice_stage==1" class="order_btn">发票开具中</a>
+                            
+                            
+                                <a v-if="item.invoice_stage==2" :href="item.invoice_url" class="order_btn" target="_blank">查看发票</a>
+                            
+                            
+                                <a v-if="item.state==0&&item.pay_type==1" class="order_btn" v-on:click="updateOrder(item,1)">取消订单</a>
+                           
+                                
+                                <a v-if="item.state==0&&item.pay_type==2" class="order_btn" v-on:click="updateOrder(item,-1)">删除</a>
+                                
+                            
+                                
+                                <a v-if="item.state==2&&item.type_id!=3" class="order_btn xufei_btn" :href="'../pay/buy.html?product='+item.product_id+'&xufeiId='+item.id+'&product_type='+item.type_id">续费</a>
+                           
+                            
+                                <a v-if="item.state==2&&item.type_id==3" class="order_btn" :href="item.deal_file" target="_blank">下载标书</a>
+                            
+                                
+                                <a  v-if="item.state==0&&item.pay_type==2"  :href="'../pay/pay.html?orderNo='+item.order_no" class='order_btn_2 select-region'>支付</a>
+
+                                <!-- href='../pay/buy.html?product_type=1&product=4' item.product_id == 1||item.product_id == 2||item.product_id == 3 -->
+                            
+                                    <a v-if="(item.state==2&&item.type_id==1&&[1,2,3,4].includes(item.product_id))" v-on:click="upgrade(item.product_id)" class='order_btn_2'>升级</a>
+                                
+                     </div>
+                </div>
+
+
+                <!-- 加载中 -->
+                <div class="loading" v-show="loading">
+                   <div class="loader-15"></div>
+                   </div>
+                 <div class="weui-loadmore weui-loadmore_line" v-show="isLoadAll">
+                  <span class="weui-loadmore__tips">没有更多了</span>
+                  </div>
+                <div class="weui-loadmore weui-loadmore_line" v-show="showNoData">
+                     <span class="weui-loadmore__tips">暂时没有订单</span>
+                </div>
+            </div>
+        </div>
+
+         <vue-footer selecttab="我的"></vue-footer>
+    </div>
+
+
+
+</body>
+<script src="../scripts/flexible.js"></script>
+<script src="../scripts/zepto.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="../plugs/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/my/myorder.js?v=0118"></script>
+<script>
+    $('.pay-item').live('click', function () {
+       var product_id= $(this).data("product-id");
+       $('.pay-item').removeClass("active");
+       $(this).addClass("active");
+       console.log(product_id);
+       vm.upgrade_product_id = product_id;
+
+    })
+</script>
+</html>

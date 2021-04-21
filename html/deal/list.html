@@ -1,0 +1,644 @@
+﻿
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8" /><meta content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport" /><title>
+	投标宝-找项目 
+</title>
+    <link rel="stylesheet" href="../css/mui.min.css" />
+    <link rel="stylesheet" href="../css/app.css" />
+    <link rel="stylesheet" href="../css/mui.picker.css" />
+    <link rel="stylesheet" href="../css/mui.poppicker.css" />
+    <link rel="stylesheet" href="../css/mui.dtpicker.css" />
+    <link rel="stylesheet" href="../css/common.css?v=0114" />
+    <link rel="stylesheet" href="../css/search/search_result.css?v=0113" />
+    <link href="../css/weui.css" rel="stylesheet" />
+    <style type="text/css">
+       
+      .search-modal-key{margin-top:-2.3rem;}
+      .search-modal-sug{margin-top:-2.6rem;border-top:none;overflow-y: scroll;    height: 100%;}
+      .sug_item{display:inline-block;padding:0.3rem;border-bottom:1px solid #f2f2f2;width:100%;}
+      .sug_item i{color:red;font-style:normal;}
+      .search-modal-sug.search-modal .modal-4 .main .content{display:inherit;}
+      .cat.project .active{color:#297cf7;}
+      .box-other{font-size:0.4rem;text-align:center;}
+      .ptsoon{padding-top:5rem;}
+      .list-item .name i{color:red;font-style:normal;}
+      .fast{bottom:3.65rem;}
+        #app {
+            /*width:100%;
+            height:100%;*/
+        }
+        .title {
+            font-weight:bold;
+        }
+        .list-list {
+        margin-bottom: 80px;
+        }
+        .city-select {
+           background-color: #297cf7;
+           color:white !important;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="app" v-cloak>
+
+     <div class="container">
+
+        <div class="search-options">
+            <div class="bx">
+                <div class="search-box">                    
+                    <input v-model="requestPar.keyword" v-on:click="showHistoryKeyword=true;selectSearchOptionTabIndex=0"  @keyup="keywordKeyUp($event)" type="text" class="keyword" placeholder="请输入关键词搜索"/>
+                    <div class="search-icon" v-on:click="setKeyword"></div>
+                </div>
+            </div>
+            <div class="category-1">
+                <div class="cat project" :class="{'active':selectTabIndex==1}" v-on:click="setTab(1)">
+                    <span>搜项目</span>
+                </div>
+                <div class="cat" :class="{'active':selectTabIndex==2}" v-on:click="setTab(2)">搜中标人</div>
+                <div class="cat" :class="{'active':selectTabIndex==3}" v-on:click="setTab(3)">搜业主</div>
+            </div>
+            
+              <!--搜索选项-->
+            <div class="category-2" v-show="selectTabIndex==1">
+                <div  class="cat project project-2" :class="{'active':selectSearchOptionTabIndex==1}"  v-on:click="setSearchOptionTab(1)">
+                    <span class="subshow-1">
+
+                        <label v-if="selectCityIds.length==0&&selectDistIds.length==0&&selectPlatmIds.length==0">地区</label>
+                        <label class="active"  v-if="selectCityIds.length>0||selectDistIds.length>0||selectPlatmIds.length>0"> {{selectCity.join(',')}} {{selectDist.join(',')}} {{selectPlatm.join(',')}} </label>
+                    </span>
+                    <img class="cat-icon" src="../images/search/cat_icon.png" alt=""/>
+                </div>
+                <div  class="cat project project-2" :class="{'active':selectSearchOptionTabIndex==2}" v-on:click="setSearchOptionTab(2)">
+                    <span  class="subshow-3" >
+
+                        <label v-if="requestPar.dealTimeFrom==''&&requestPar.dealTimeTo==''">时间</label>
+                        <label class="active"  v-if="requestPar.dealTimeFrom!=''||requestPar.dealTimeTo!=''">
+                            <em v-if="requestPar.dealTimeFrom!=''">{{requestPar.dealTimeFrom}}</em>
+                            <em v-if="requestPar.dealTimeTo!=''">-{{requestPar.dealTimeTo}}</em>
+                        </label>
+
+                    </span>
+                    <img class="cat-icon" src="../images/search/cat_icon.png" alt=""/>
+                </div>
+                <div  class="cat project project-2" :class="{'active':selectSearchOptionTabIndex==3}" v-on:click="setSearchOptionTab(3)">
+                    <span  class="subshow-4" >
+                          <label v-if="requestPar.minAmount==''&&requestPar.maxAmount==''">金额</label>
+                         <label class="active"  v-if="requestPar.minAmount!=''||requestPar.maxAmount!=''">
+                             <em v-if="requestPar.minAmount!=''">{{requestPar.minAmount}}万</em>
+                          
+                            <em v-if="requestPar.maxAmount!=''">-{{requestPar.maxAmount}}万</em>
+
+                        </label>
+
+                    </span>
+                    <img class="cat-icon" src="../images/search/cat_icon.png" alt=""/>
+                </div> 
+                <div  class="cat project project-2" :class="{'active':selectSearchOptionTabIndex==4}" v-on:click="setSearchOptionTab(4)" >
+                    <span class="subshow-2">
+                       <label v-if="selectTypeNames==''">行业</label> 
+                       <label class="active" v-if="selectTypeNames!=''">{{selectTypeNames}}</label> 
+                    </span>
+                    <img class="cat-icon" src="../images/search/cat_icon.png" alt=""/>
+                </div>
+                
+            </div>
+            
+
+        </div>
+
+          <!-- 地区 -->
+         <div class="search-modal search-modal-1" style="display:none;"  v-show="selectSearchOptionTabIndex==1">
+            <div   class="modal modal-1">
+                <div class="main mainsharp maindistrict">
+                    <div class="level1 level-box">
+                        <div class="name"  v-for="(item, index) in areaListLevel1"  :class="{'active':areaSelectIndexLeve11==item.id}" v-on:click="areaLevelClick(item,1)">{{item.name}}</div>
+                        <a class="name"    href="tel:182-1076-2747">全球订阅</a>
+                    </div>
+
+                     <!-- 地区选择-->
+                   <div class="level2 level-box" >
+                        <div class="name" v-for="(item, index) in areaListLevel2"  :class="{'active':areaSelectIndexLeve12==item.id}" v-on:click="areaLevelClick(item,2)">{{item.name}}</div>
+                    </div>
+
+                    <div class="level3 level-box" >
+                        <div class="name" v-for="(item, index) in areaListLevel3"  :class="{'active':areaSelectIndexLeve13==item.id}" v-on:click="areaLevelClick(item,3)">{{item.name}}</div>
+                    </div>
+
+                    <div class="level4 level-box" >
+                   <div class="name" v-for="(item, index) in areaListLevel4"  :class="{'active':areaSelectIndexLeve14==item.id}" v-on:click="areaLevelClick(item,4)" v-bind:data-city-id="item.id">{{item.name}}</div>
+                   
+                    </div>
+
+                    <div class="level5 level-box" >
+                        <div class="item level-item-5" v-for="(item, index) in areaListLevel5" v-bind:data-dist-id="item.id" v-bind:data-dist-name="item.name"  v-bind:data-dist-parentid="item.parent_id"  v-bind:data-dist-parentname="item.parent_name"> 
+                            <div class="name">{{item.name}}</div>
+                             <div class="icon"></div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div id="handles" class="handles">
+                    <div class="select-all reset" v-on:click="clearAreaSearch">重置</div>
+                    <div class="confirm" v-on:click="setAreaSearch">确认</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 时间 -->
+        <div class="search-modal search-modal-3" style="display:none;" v-show="selectSearchOptionTabIndex==2">
+            <div index="3" class="modal modal-3">
+                <div class="main">
+                    <div class='date-box'>
+                        <div class="data-item" v-on:click="setTimeRangeType(0)" :class="{'active':timeRangeType==0}">全部</div>
+                        <div class="data-item" v-on:click="setTimeRangeType(1)" :class="{'active':timeRangeType==1}">近三天</div>
+                        <div class="data-item" v-on:click="setTimeRangeType(2)" :class="{'active':timeRangeType==2}">近十天</div>
+                        <div class="data-item" v-on:click="setTimeRangeType(3)" :class="{'active':timeRangeType==3}">近一个月</div>
+                    </div>
+                    <div class="time-box">
+                        <div class="data-box">
+                            <input type="text" id="dealTimeFrom" v-model="requestPar.dealTimeFrom" class="data-value start" placeholder="选择开始时间">
+                        </div>
+                        <div class="line"></div>
+                        <div class="data-box">
+                            <input type="text"id="dealTimeTo" v-model="requestPar.dealTimeTo" class="data-value end"  placeholder="选择结束时间">
+                        </div>
+                    </div>
+                </div>
+                <div class="handles">
+                    <div style="background-color: #CCCCCC; color: #ffffff;" class="select-all reset" v-on:click="clearTime">重置</div>
+                    <div class="confirm" v-on:click="setTime">确定</div>
+                </div>
+            </div>
+        </div>
+
+       <!-- 金额 -->
+        <div class="search-modal search-modal-4" style="display:none;" v-show="selectSearchOptionTabIndex==3">
+            <div  class="modal modal-4">
+                <div class="main">
+                    <div class="content">
+                        <div class="data-box">
+                            <input type="number" v-model="requestPar.minAmount" onkeyup="this.value=this.value.replace(/[^\d]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " class="data-value min-price" placeholder="最低金额(万元）">
+                        </div>
+                        <div class="line"></div>
+                        <div class="data-box">
+                            <input type="number" v-model="requestPar.maxAmount" onkeyup="this.value=this.value.replace(/[^\d]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " class="data-value max-price" placeholder="最高金额(万元)">
+                        </div>
+                    </div>
+                </div>
+                <div class="handles">
+                    <div style="background-color: #CCCCCC; color: #ffffff;" class="select-all reset" v-on:click="clearAmount">重置</div>
+                    <div class="confirm" v-on:click="setAmount">确定</div>
+                </div>
+            </div>            
+        </div>
+
+         <!-- 行业 -->
+         <div class="search-modal search-modal-5" style="height:500px;overflow-y:scroll;display:none;" v-show="selectSearchOptionTabIndex==4">
+            <div   class="modal modal-5">
+                <div id="main-2" class="main mainsharp">
+                    
+                    <div class="level5 level-box level-cate">
+                       
+                    <div class="item level-item-5 show"  v-for="(item, index) in dealTypeList" v-bind:data-typeid-id="item.id" v-bind:data-type-name="item.name"> 
+                         <div class="name">{{item.name}}</div> 
+                          <div class="icon"></div> 
+                    </div>
+                            
+                            
+                    </div>
+                </div>
+                <div  class="handles">
+                    <div class="select-all reset" v-on:click="clearTypeId">重置</div>
+                    <div class="confirm" v-on:click="setTypeId">确认</div>
+                </div>
+            </div>
+        </div>
+
+         <!-- 历史搜索 -->
+         <div class="search-modal search-modal-key" style="display:none;"  v-show="showHistoryKeyword">
+             <div class="modal modal-4">
+                <div class="main">
+                    <div class="content">
+                        <div class="key_title">
+                            <div>历史搜索</div><div style="font-size:0.32rem;color:#333;" class="key_clear" v-on:click="clearHistoryKeyword" v-show="historyKeywordList.length>0">清除</div>
+                        </div>
+                        <div class="key_item_list">
+                             <div class="key_item" v-for="(item, index) in historyKeywordList" @click="requestPar.keyword = item;setKeyword();">
+                                  
+                                    {{item}}
+
+                                </div>
+                                 <div v-show="historyKeywordList.length==0">暂时没有搜索记录</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="handles">
+                    <div class="confirm key_close" v-on:click="showHistoryKeyword=false">关闭</div>
+                </div>
+            </div>      
+         </div>
+
+          <!-- 建议搜索 -->
+         <div class="search-modal search-modal-sug" style="display:none;"  v-show="showSearchSug">
+             <div class="modal modal-4">
+                <div class="main">
+                    <div class="content search-modal-sug-list">
+                        <a class="sug_item" v-for="(item, index) in sugList"  :href="'detail.html?id='+item.id">
+                          <em v-html="item.titleshow" class="title"></em>
+                        </a>
+
+                    </div>
+                </div>
+            </div>      
+         </div>
+
+         <!-- 搜索结果 -->
+         <div class="list-box-title" v-show="selectTabIndex==1&&selectSearchOptionTabIndex==0&&showHistoryKeyword==false&&showSearchSug==false">
+                    <div class="left">
+                        共 <span class="num">{{totalCount}}</span> 条信息
+                    </div>
+                    <div class="right">
+                        <div class="zhongbiao btn"  :class="{'active':requestPar.stageId=='0'}" v-on:click="setStageId('0')">招标</div>
+                        <div class="zhongbiao btn"  :class="{'active':requestPar.stageId=='1'}" v-on:click="setStageId('1')">中标</div>
+                    </div>
+         </div>
+
+          <!-- 项目列表 -->
+         <div class="list-box" v-show="selectTabIndex==1&&selectSearchOptionTabIndex==0&&showHistoryKeyword==false&&showSearchSug==false"   @scroll="handleScroll($event)">            
+            <div class="bx no-data" style="display: none;" v-show="showNoData">
+                <div class="no-data-box box-deal">
+                    <div class="title">未找到您搜索的项目(请至少设置一个搜索条件)</div>
+                    <div class="tip-item">
+                        1.历史数据从2020年1月起，如需过往数据请<br /><span class="red"><a href="tel:182-1076-2747">点击联系官方</a></span>
+                    </div>
+                    <div class="tip-item">
+                        2.当天最新数据因全网汇总，会有一定延迟，请稍后查询，若出现遗漏请<span class="red"><a href="tel:182-1076-2747">点击联系官方客服</a></span>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="bx have-data">
+                
+                <div class="list-list">
+                 <div class="list-item" v-for="(item, index) in list" >
+                            <div class="name">{{index+1}} <a :href="'../deal/detail.html?id='+item.id" target="_blank"> <em v-html="item.titleshow" class="title"></em></a></div>
+                            <div class="desc">
+                                <div class="tag">
+                                    <span v-if="item.type_name!=''&&item.type_name!=null" class="type-name">{{item.type_name}}</span>
+                                     <span class="province" v-if="item.platform==''">{{item.province}}{{item.city}}</span> 
+                                     <span class="province" v-if="item.platform!=''">{{item.platform}}</span> 
+                                     <span v-if="item.stage_id==0">招标</span> 
+                                     <span v-if="item.stage_id==1" class="stage_zhongbiao">中标</span> 
+                                     <span v-if="item.stage_id==2">变更</span>
+                                     <span v-if="item.stage_id==3">开标</span>
+                                     <span v-if="item.stage_id==4">废标</span> 
+                                     <span v-if="item.amount_control!=''">{{item.amount_control}}</span> 
+                                     <span v-if="item.follow_count>0">关注:{{item.follow_count}}人</span> 
+                                </div>
+                            </div>
+                            <div class="time_show">
+                                <div class="time_item" v-if="item.deal_time!=''">
+                                    <img src="../images/deal/deal_time.png"/>{{item.deal_time}}
+                                    
+                                </div>
+                                <div class="time_item" v-if="item.end_time!=''">
+                                    <img src="../images/deal/end_time.png"/>{{item.end_time_f}}
+                                </div>
+                                 <div class="time_item daoshu"  v-if="item.end_time!=''">
+                                    <img src="../images/deal/countdown.png"/>
+                                     {{item.count_down_time}}
+                                </div>
+
+
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                            <!-- 加载中 -->
+                            <div class="loading" v-show="loading">
+                                    <div class="loader-15"></div>
+
+                             </div>
+                            <div class="weui-loadmore weui-loadmore_line" v-show="isLoadAll">
+                             <span class="weui-loadmore__tips">没有更多了</span>
+                             </div>
+
+                </div>
+                
+            </div>
+        </div>
+
+         <div class="list-list" v-show="selectTabIndex!=1"><div class='box-other ptsoon'>敬请期待</div></div>
+    </div>
+        
+    <a class="history" href="../my/history.html">
+        <img src="../images/deal/history.png" />
+    </a>
+    <a class="history fast" v-on:click="subscription">
+        <img src="../images/deal/fast.png" />
+    </a>
+
+    <vue-footer selecttab="找项目"></vue-footer>
+
+    </div>
+   
+</body>
+<script src="../scripts/flexible.js"></script>
+<script src="../scripts/zepto.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="https://res.wx.qq.com/open/libs/weuijs/1.2.1/weui.min.js"></script>
+<script src="../plugs/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/deal/list.js?v=1.01"></script>
+<script>
+    $('[data-typeid-id]').live('click', function () {
+
+
+        var ischeck = $(this).hasClass("active");
+        if (!ischeck) {
+            $(this).addClass("active");
+
+            if ($(this).data("typeid-id") == "0") {
+
+                $('[data-typeid-id]').each(function () {
+
+                    $(this).addClass("active");
+
+
+
+                })
+            } else {
+
+                var isCheckAll = true;
+                $('[data-typeid-id]').each(function () {
+
+                    if (!$(this).hasClass("active") && $(this).data("typeid-id") != "0") {
+                        isCheckAll = false;
+                    }
+
+
+
+                })
+                if (isCheckAll) {
+                    $('[data-typeid-id="0"]').addClass("active");
+                }
+
+
+            }
+
+
+
+        }
+        else {
+
+            $(this).removeClass("active");
+            $('[data-typeid-id="0"]').removeClass("active");
+            if ($(this).data("typeid-id") == "0") {
+                $('[data-typeid-id]').each(function () {
+
+                    $(this).removeClass("active");
+
+
+
+                })
+            } else {
+
+            }
+        }
+
+        vm.selectTypeNames = vm.getSelectTypeNames();
+
+    })//行业点击
+
+    $('[data-dist-id]').live('click', function () {// 区域点击
+
+        var ischeck = $(this).hasClass("active");
+        if (!ischeck) {
+            $(this).addClass("active");
+            var value = $(this).data("dist-id");
+            if (value.toString().indexOf("all") > -1) {
+
+                $('[data-dist-id]').each(function () {
+
+                    $(this).addClass("active");
+
+
+
+                })
+            } else {
+
+                var isCheckAll = true;
+                $('[data-dist-id]').each(function () {
+                    if ((!$(this).hasClass("active"))) {
+                        if (($(this).data("dist-id").toString().indexOf("all") <= -1)) {
+                            isCheckAll = false;
+
+                        }
+
+                    }
+
+
+
+                })
+                if (isCheckAll) {
+
+                    $('[data-dist-id]').each(function () {
+
+                        if ($(this).data("dist-id").toString().indexOf("all") > -1) {
+                            $(this).addClass("active");
+
+                        }
+
+
+
+                    })
+                }
+
+
+            }
+
+
+
+        }
+        else {
+
+
+            $(this).removeClass("active");
+            //$('[data-distid-id]')[0].removeClass("active");
+            $('[data-dist-id]').each(function () {
+                if ($(this).data("dist-id").toString().indexOf("all") > -1) {
+                    $(this).removeClass("active");
+                }
+
+
+            })
+
+            if ($(this).data("dist-id").toString().indexOf("all") > -1) {
+                $('[data-dist-id]').each(function () {
+
+                    $(this).removeClass("active");
+
+
+
+                })
+            } else {
+
+            }
+        }
+        var haveSelect = false;
+        if (vm.areaLevel2Name!="央企招采") {//选中区域
+          
+            var cityId = "";
+            var cityName = "";
+            $('[data-dist-id]').each(function () {
+                cityId = $(this).data("dist-parentid");
+                cityName = $(this).data("dist-parentname");
+                var distId = $(this).data("dist-id");
+                var distName = $(this).data("dist-name");
+                if (distId == "all_492") {
+                    distName = "国家级项目";
+                }
+                if ($(this).hasClass("active")) {
+                    haveSelect = true;
+                    //if (distId.toString().indexOf("all")<=-1) {
+                    if (vm.selectDistIds.indexOf(distId) == -1) {
+                        vm.selectDistIds.push(distId);
+                        if (distName != "全部") {
+                            vm.selectDist.push(distName);
+                        }
+
+                    }
+
+                    // }
+
+                } else {
+                    if (vm.selectDistIds.indexOf(distId) > -1) {
+                        vm.selectDistIds.splice(vm.selectDistIds.indexOf(distId), 1);
+                        vm.selectDist.splice(vm.selectDist.indexOf(distName), 1);
+                    }
+
+
+                }
+
+
+            })
+            if (haveSelect) {
+                if (vm.selectCityIds.indexOf(cityId) == -1) {
+
+                    vm.selectCityIds.push(cityId);
+                    vm.selectCity.push(cityName);
+                }
+
+
+            } else {
+                if (vm.selectCityIds.indexOf(cityId) > -1) {
+                    vm.selectCityIds.splice(vm.selectCityIds.indexOf(cityId), 1);
+                    vm.selectCity.splice(vm.selectCity.indexOf(cityName), 1);
+
+                }
+            }
+        }
+       else {//选中平台
+
+            $('[data-dist-id]').each(function () {
+
+                var distId = $(this).data("dist-id");
+                var distName = $(this).data("dist-name");
+                if ($(this).hasClass("active")) {
+                    haveSelect = true;
+
+                    if (vm.selectPlatmIds.indexOf(distId) == -1) {
+                        vm.selectPlatmIds.push(distId);
+                        if (distName != "全部") {
+                            vm.selectPlatm.push(distName);
+                        }
+
+                    }
+
+                    // }
+
+                } else {
+                    if (vm.selectPlatmIds.indexOf(distId) > -1) {
+                        vm.selectPlatmIds.splice(vm.selectPlatmIds.indexOf(distId), 1);
+                        vm.selectPlatm.splice(vm.selectPlatm.indexOf(distName), 1);
+                    }
+
+
+                }
+
+
+            })
+
+        }
+
+
+
+
+        //
+
+
+        //
+
+
+
+    })//省市县
+
+    $('#dealTimeFrom').on('click', function () {
+        $("#dealTimeFrom").blur();
+        weui.datePicker({
+            start: 2020,
+            end: new Date().getFullYear(),
+            onChange: function (result) {
+
+            },
+            onConfirm: function (result) {
+                var year = result[0].value;
+                var month = result[1].value < 10 ? ("0" + result[1].value) : result[1].value;
+                var day = result[2].value < 10 ? ("0" + result[2].value) : result[2].value;
+                var date = year + "-" + month + "-" + day;
+                vm.requestPar.dealTimeFrom = date;
+
+            },
+            title: '选择开始时间'
+        });
+    })//选择开始时间
+
+    $('#dealTimeTo').on('click', function () {
+        $("#dealTimeTo").blur();
+        weui.datePicker({
+            start: 2020,
+            end: new Date().getFullYear(),
+            onChange: function (result) {
+
+            },
+            onConfirm: function (result) {
+                var year = result[0].value;
+                var month = result[1].value < 10 ? ("0" + result[1].value) : result[1].value;
+                var day = result[2].value < 10 ? ("0" + result[2].value) : result[2].value;
+                var date = year + "-" + month + "-" + day;
+                vm.requestPar.dealTimeTo = date;
+
+            },
+            title: '选择结束时间'
+        });
+    })//选择结束时间
+
+    setInterval(function () {//选中还原
+
+        $('[data-dist-id]').removeClass("active");
+        $('[data-city-id]').removeClass("city-select");
+        vm.restoreSelectDist();//还原选中区域
+        vm.restoreSelectCity();//还原选中城市
+        vm.restoreSelectPlat();//还原选中平台
+        //console.log("vm.selectCityIds", vm.selectCityIds);
+        //console.log("vm.selectCityIds", vm.selectDistIds);
+        //console.log("vm.selectPlatmIds", vm.selectPlatmIds);
+    }, 500);
+ </script>
+</html>

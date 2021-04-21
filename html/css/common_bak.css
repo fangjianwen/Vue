@@ -1,0 +1,77 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+}
+.container {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+.bx {
+    padding: 0 0.4rem;
+    box-sizing: border-box;
+    width: 100%;
+}
+.myfollow, .push-history-link {
+    width: 2.2rem;
+    height: 1.1867rem;
+    position: fixed;
+    right: 0.2267rem;
+    bottom: 1.8267rem;
+    color: #ffffff;
+    font-size: 0.3467rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../imgs/search/myfollow.png);
+    background-size: 100% 100%;
+}
+.push-history-link {
+    background-image: url(../imgs/search/setting.png);
+}
+.setting{
+    position: fixed;
+    width: 2.2rem;
+    height: 1.1867rem;
+    right: 0.2267rem;
+    bottom: 0.56rem;
+    color: #ffffff;
+    font-size: 0.3467rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../imgs/search/setting.png);
+    background-size: 100% 100%;
+}
+.btnPrimary {
+    width: 8.5333rem;
+height: 1.1733rem;
+background: #2c78e8;
+border-radius: 0.5867rem;
+font-size: 0.4267rem;
+display: flex;
+justify-content: center;
+align-items: center;
+color: #ffffff;
+text-decoration:none;
+}
+span.province {
+                    background-color: #4D8DEB;
+}
+                span.city {
+                    background-color: #F7CF2F;
+}
+                span.stage {
+                    background-color: #38C75D;
+}
+                span.cate {
+                    background-color: #EF6B31;
+}
+
+.dn{display:none;}
+a{text-decoration:none;color:inherit;
+}

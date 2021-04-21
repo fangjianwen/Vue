@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>提醒设置
+    </title>
+    <link rel="stylesheet" href="../css/common.css?v=1125" />
+    <link rel="stylesheet" href="../css/setting/remind_add.css?v=0113" />
+    <link href="../css/weui.css" rel="stylesheet" />
+    <style type="text/css">
+        .tab {
+            display: flex;
+            justify-content: space-between;
+            background-color: #ffffff;
+            font-size: 0.42667rem;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 0 0.4rem;
+        }
+
+            .tab .tab-item {
+                /* line-height: 1.0667rem; */
+                padding:0.53333rem 0;
+                height: 0.4rem;
+                line-height: 0.4rem;
+            }
+
+                .tab .tab-item.active {
+                    border-bottom: 2px solid #297cf7;
+                    color: #297cf7;
+                }
+
+        .container {
+            align-items: inherit;
+        }
+
+        .add-btn {
+            margin: 0.4rem auto 0;
+        }
+
+        .main .item .content input {
+            font-size: .3733rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+
+        <div class="container" style="padding-bottom: 2rem;">
+            <div class="tab">
+                <a href="follow_statistics_list.html" class="tab-item ">关注来源</a>
+                <a href="follow_project_list.html" class="tab-item">关注项目</a>
+                <div class="tab-item active">提醒设置</div>
+
+            </div>
+            <div class="remind">您可以自定义提醒，方便您管理已关注的项目</div>
+            <div class="bx list-box" @scroll="handleScroll($event)">
+
+
+                <div class="main" v-for="(item, index) in list">
+                    <a :href="'remind_update.html?id='+item.id">
+                        <div class="item date">
+                            <div class="title">投标截止期之前</div>
+                            <div class="content">
+                                <input  type="text" readonly="true" v-model="item.days">
+                                <span>天</span>
+                            </div>
+                        </div>
+                        <div class="item content">
+                            <div class="title">提醒内容</div>
+                            <div class="content">
+                                <input v-model="item.text" type="text" readonly="true">
+                            </div>
+                        </div>
+                        <div class="item color">
+                            <div class="title">配色</div>
+                            <div v-bind:style="{ 'background-color': item.color }" class="color-select"></div>
+                        </div>
+                    </a>
+                    <div class="handles">
+
+                        <a class="btn delete" v-on:click="deleteSub(item)">删除</a>
+                    </div>
+                </div>
+ 
+                <!-- 加载中 -->
+                <div class="loading" v-show="loading">
+                   <div class="loader-15"></div>
+                 </div>
+                 <div class="weui-loadmore weui-loadmore_line" v-show="isLoadAll">
+                  <span class="weui-loadmore__tips">没有更多了</span>
+                  </div>
+                <div class="weui-loadmore weui-loadmore_line" v-show="showNoData">
+                     <span class="weui-loadmore__tips">暂时没有提醒</span>
+                </div>
+
+            </div>
+            <a class="add-btn" href="remind_add.html" v-show="list.length<7">
+                <span>添加提醒</span>
+            </a>
+        </div>
+
+
+        <!-- 底部导航栏 -->
+        <vue-footer selecttab="我的"></vue-footer>
+
+    </div>
+</body>
+ <script src="../scripts/flexible.js"></script>
+<script src="../scripts/zepto.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="../plugs/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/my/remind_list.js?v=0113"></script>
+</html>

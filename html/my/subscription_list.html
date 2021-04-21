@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>付费订阅</title>
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <link rel="stylesheet" href="../css/mui.picker.css">
+    <link rel="stylesheet" href="../css/mui.poppicker.css">
+    <link rel="stylesheet" href="../css/common.css?v=0111_2">
+    <link rel="stylesheet" href="../css/setting/setting.css?v=0111_3">
+    <link href="../css/weui.css" rel="stylesheet" />
+    <style type="text/css">
+        .subscribe-btn a {
+            color: #fff;
+        }
+
+        .subscribe .content {
+            height: auto;
+            font-family: 'Microsoft YaHei';
+        }
+
+            .subscribe .content .title {
+                height: 1.2rem;
+                line-height: 1.2rem;
+                font-size: 0.42rem;
+                font-weight: bold;
+            }
+
+            .subscribe .content .list-item {
+                min-height: 1.2rem;
+                height: auto;
+                font-size: 0.42rem;
+            }
+
+                .subscribe .content .list-item .select {
+                    max-width: 60%;
+                    padding-top: 0.2rem;
+                    padding-bottom: 0.2rem;
+                    color: #297cf7;
+                    font-size: 0.37333rem;
+                }
+        .tishi {
+            display:block;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+
+        <div class="container" style="padding-bottom: 1.7rem;">
+            <div class="tab">
+                <div class="tab-item active">订阅设置</div>
+                <a class="tab-item" href="push_setting.html">推送设置</a>
+                <a class="tab-item" href="push_history.html">订阅内容</a>
+            </div>
+            <div class="subscribe">
+                <div class="list" @scroll="handleScroll($event)">
+
+                    <div class="content" v-for="(item, index) in list" >
+                        <a  :href="'subscription.html?id='+item.id">
+                            <div class="title">{{item.title}}</div>
+                            <div class="list-item region">
+                                <div class="cat">地区</div>
+                                <div class="select">{{item.region}}</div>
+                            </div>
+                            <div class="list-item trade-type">
+                                <div class="cat">行业</div>
+                                <div class="select">{{item.cate}}</div>
+                            </div>
+                            <div class="list-item add-keywords">
+                                <div class="cat">标题关键字</div>
+                                <div class="select">{{item.keywords}}</div>
+                            </div>
+                        </a>
+
+
+                        <div class="handles">
+                            <a class="btn delete" v-on:click="deleteSub(item)">删除</a>
+                        </div>
+                    </div>
+                <!-- 加载中 -->
+                <div class="loading" v-show="loading">
+                   <div class="loader-15"></div>
+                 </div>
+                 <div class="weui-loadmore weui-loadmore_line" v-show="isLoadAll">
+                  <span class="weui-loadmore__tips">没有更多了</span>
+                  </div>
+                <div class="weui-loadmore weui-loadmore_line" v-show="showNoData">
+                     <span class="weui-loadmore__tips">暂时没有订阅</span>
+                </div>
+                </div>
+                <a class="subscribe-btn" href="subscription.html">
+                    <span>添加订阅</span>
+                </a>
+            </div>
+
+        </div>
+        <!-- 底部导航栏 -->
+        <vue-footer selecttab="我的"></vue-footer>
+
+
+        <!-- 提示 -->
+        <div class="greybg" v-show="showTipDiv"></div>
+        <div class="tishi" v-show="showTipDiv">
+            <div class="tishi_title">提示</div>
+            <div class="tishi_content">
+                亲爱的用户<br />
+                系统提示您尚未购买或授权数据来源
+            </div>
+            <div class="tishi_handle">
+                <a class="tishi_handle_cancel" v-on:click="showTipDiv=false">取消</a>
+                <a class="tishi_handle_pay" href="buy_reasion.html">购买/升级</a>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+<script src="../scripts/flexible.js"></script>
+<script src="../scripts/zepto.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="../plugs/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/my/subscription_list.js?v=0112"></script>
+<!--    <script>
+        $(".list").scroll(function () {
+            var h = $(this).height();//div可视区域的高度
+            var sh = $(this)[0].scrollHeight;//滚动的高度，$(this)指代jQuery对象，而$(this)[0]指代的是dom节点
+            var st = $(this)[0].scrollTop;//滚动条的高度，即滚动条的当前位置到div顶部的距离
+            if (h + st >= sh - 1) {
+                if (vm.requestPar.pageIndex * vm.requestPar.pageSize >= vm.totalCount) {
+                    vm.isLoadAll = true;
+                    console.log("加载完成");
+                    return;
+                }
+                vm.requestPar.pageIndex++;
+                vm.getDataList();
+
+            }
+        })
+    </script>-->
+
+</html>

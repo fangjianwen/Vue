@@ -1,0 +1,106 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+.user {
+  display: flex;
+  align-items: center;
+  height: 2.4rem;
+  background: #2c78e8;
+  box-sizing: border-box;
+  padding: 0 0.4rem;
+}
+.user .avatar {
+  width: 1.28rem;
+  height: 1.28rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.user .avatar img {
+  width: 100%;
+  height: 100%;
+}
+.user .username {
+  font-size: 0.48rem;
+  color: #ffffff;
+  margin-left: 0.4rem;
+}
+.user .auth {
+  width: 1.4667rem;
+  height: 0.48rem;
+  margin-left: 0.2667rem;
+  background-image: url(../../imgs/order/vip.png);
+  background-size: 100% 100%;
+}
+.list {
+  flex: 1;
+  overflow-y: scroll;
+  background-color: #ECF4FF;
+  box-sizing: border-box;
+  padding: 0 0.4rem;
+  padding-top: 0.4rem;
+}
+.list .item {
+  /*min-height: 3.08rem;*/
+  background: #ffffff;
+  border-radius: 0.1333rem;
+  box-sizing: border-box;
+  padding: 0.4rem;
+  margin-bottom: 0.2667rem;
+}
+.list .item .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.3733rem;
+  padding-bottom: 0.3333rem;
+  border-bottom: 0.0133rem solid #E6E6E6;
+}
+.list .item .header .status {
+  color: #2C78E8;
+}
+.list .item .main {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  margin-top: 0.3333rem;
+}
+.list .item .main .cover {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 0.1333rem;
+  overflow: hidden;
+}
+.list .item .main .cover img {
+  width: 100%;
+  height: 100%;
+}
+.list .item .main .detail {
+  flex: 1;
+  margin-left: 0.4rem;
+}
+.list .item .main .detail .name {
+  font-size: 0.3733rem;
+  font-weight: 600;
+}
+.list .item .main .detail .price {
+  font-size: 0.32rem;
+  color: #FB7940;
+}
+.list .item .main .select-region {
+  width: 2.4rem;
+  height: 0.8533rem;
+  background-color: #2C78E8;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.3733rem;
+  border-radius: 0.4267rem;
+  text-decoration: none;
+}
+.list .item .regions {
+  font-size: 0.32rem;
+  color: #666666;
+  margin-top: 0.3333rem;
+}

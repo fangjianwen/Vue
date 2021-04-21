@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>绑定手机号
+    </title>
+    <link rel="stylesheet" href="../css/mui.min.css" />
+    <link rel="stylesheet" href="../css/app.css" />
+    <link rel="stylesheet" href="../css/mui.picker.css" />
+    <link rel="stylesheet" href="../css/mui.poppicker.css" />
+    <link rel="stylesheet" href="../css/common.css?v=1125" />
+    <link href="../css/pay/bind_mobile.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="app" v-cloak>
+
+        <div class="container">
+            <div class="data-box">
+                <div class="data-item">
+                    <div class="label">手机号：</div>
+                    <input name="mobile" type="number" v-model="requestPar.mobile" class="data-value mobile" oninput="if(value.length>11)value=value.slice(0,11)" maxlength="11" placeholder="请输入您的手机号码"  />
+                </div>
+                <div class="data-item">
+                    <div class="label">验证码：</div>
+                    <input name="code" type="text" v-model="requestPar.verCode" class="data-value code" placeholder="请填写验证码" />
+                    <div class="get-code" v-on:click="getVerCode">获取验证码</div>
+                </div>
+
+            </div>
+
+            <a  class="btn confirm" v-on:click="bindMobile">确认</a>
+
+        </div>
+        <vue-footer selecttab="我的"></vue-footer>
+
+    </div>
+</body>
+<script src="../scripts/flexible.js"></script>
+<script src="../scripts/zepto.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/my/bind_mobile.js"></script>
+</html>
+

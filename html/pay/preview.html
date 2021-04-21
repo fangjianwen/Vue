@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标书预览</title>    
+    <link rel="stylesheet" href="../css/common.css?v=1125" />
+    <style type="text/css">
+        .container{background:#ecf4ff;}
+        .biaoshu-tips{color:#1B1B1B;font-size:0.4rem;text-align:center;height:1.6rem;line-height:1.6rem;
+                      position:fixed;bottom:0;background:#fff;width:100%;
+        }
+        .biaoshu-show{padding:0.4rem;white-space:normal;text-align:center;overflow-y: scroll;}
+        .biaoshu-show img{max-width:100%;}
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+    <div class="container">
+        <div class="biaoshu-show">
+            <img v-bind:src="bidDocInfo.img_show" />            
+        </div>
+        <div class="biaoshu-tips">本页为预览页，购买后可直接进行下载</div>
+        
+    </div>
+        
+    </div>
+    <script src="../scripts/flexible.js"></script>
+<script src="../scripts/zepto.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/pay/preview.js"></script>
+</body>
+</html>

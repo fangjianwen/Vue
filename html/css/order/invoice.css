@@ -1,0 +1,53 @@
+﻿
+.container_invoice{padding:0.5rem;background:#ECF4FF;position:relative;}
+.invoice_item{padding:0.5rem;border-radius:5px;background:#fff;color:#333;margin-bottom:0.3rem;}
+.invoice_orderno{font-size:0.4rem;margin-bottom:0.4rem;padding-bottom:0.4rem;border-bottom:1px solid #f2f2f2;}
+.invoice_name{font-size:0.5rem;margin-bottom:0.3rem;font-weight:bold;}
+.invoice_amount{font-size:0.4rem;color:#999;}
+.invoice_amount i{font-style:normal;color:#F4462F}
+.invoice_list_item{display: flex;
+justify-content: space-between;
+align-items: center;
+font-size: .3733rem;
+height: 1.2rem;}
+.invoice_list_item .select{
+background-image: url(../../imgs/search/grey_arrow_right.png);
+background-repeat: no-repeat;
+background-position: right center;
+background-size: auto .3733rem;
+padding-right: .4rem;}
+.invoice_list_item .icon_left{background: url(../../imgs/setting/unselected.png) no-repeat;
+background-size: 0.5rem 0.5rem;padding-left:0.7rem;}
+.invoice_list_item .icon_left.active{background: url(../../imgs/setting/selected.png) no-repeat;background-size: 0.5rem 0.5rem;}
+.invoice_list_item .icon{background: url(../../imgs/setting/unselected.png) no-repeat;height:0.5rem;width:0.5rem;
+background-size: 0.5rem 0.5rem;}
+.invoice_list_item .icon.active{background: url(../../imgs/setting/selected.png) no-repeat;background-size: 0.5rem 0.5rem;}
+.invoice_handle{margin-top:1rem;}
+.invoice_btn{width:100%;height:1rem;line-height:1rem;color:#fff;background:#2C78E8;margin-bottom:0.3rem;font-size:0.4rem;text-align:center;border-radius:4px;display:block;}
+.invoice_btn_back{color:#333;background:#FFFFFF;}
+.invoice_list_item input{height:100%;width:100%;padding:5px;border:1px solid #eee;}
+.invoice_list_item div.input{height:50%;width:70%;}
+.greybg {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 9900;
+    background-color: #000;
+    filter: alpha(opacity=60);
+    opacity: .6;
+}
+.invoice_choose{z-index:99999;background:#EEEEEE;position:absolute;bottom:0px;height:12rem;width:100%;}
+.invoice_choose_delete{background: url(../../imgs/search/delete.png) no-repeat;height:0.5rem;width:0.5rem;position:absolute;top:0.2rem;right:0.2rem;
+background-size: 0.5rem 0.5rem;}
+.invoice_choose_title{font-weight:bold;text-align:center;margin:0.8rem 0;font-size:0.4rem;color:#333;}
+.invoice_choose_list{padding:0 0.5rem;height:8rem;overflow-y:scroll;}
+.invoice_choose_item{padding:0.5rem;display:flex;background:#fff;justify-content: space-between;margin-bottom:0.5rem;}
+.invoice_choose_item_left{width:85%;border-right: 1px dotted #666;}
+.invoice_choose_item_left_title{font-size:0.34rem;color:#666;}
+.invoice_choose_item_left_type{font-size:0.3rem;color:#999;margin-top:0.2rem;}
+.invoice_choose_item_left_title .default{margin-left:0.5rem;color:#F4462F;background:#fee2d5;padding:0 5px;border-radius:8px;}
+.invoice_choose_item_right{line-height:1rem;color:#999;font-size:0.3rem;}
+.dn{display:none;}

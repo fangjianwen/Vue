@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head >
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>推送设置</title>
+    <link rel="stylesheet" href="../css/style.css?v=0111_2">
+    <style type="text/css">
+        /* .tab {
+            display: flex;
+            justify-content: space-between;
+            background-color: #ffffff;
+            font-size: 0.3733rem;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+            .tab .tab-item {
+                line-height: 1.0667rem;
+            }
+
+                .tab .tab-item.active {
+                    border-bottom: 0.0133rem solid #2C78E8;
+                    color: #2C78E8;
+                } */
+    </style>
+</head>
+<body>
+
+    <div id="app" v-cloak>
+        <div class="container containersetting" style="background: #fff;">
+            <div class="tab">
+                <a class="tab-item " href="subscription_list.html">订阅设置</a>
+                <div class="tab-item active">推送设置</div>
+                <a class="tab-item" href="push_history.html">订阅内容</a>
+            </div>
+            <div class="lineeee"></div>
+            <div class="set-item" :class="{'active':requestPar.pushType==1}" v-on:click="requestPar.pushType=1">
+                <div class="name">实时推送（间隔5分钟）</div>
+            </div>
+            <div class="set-item" :class="{'active':requestPar.pushType==2}" v-on:click="requestPar.pushType=2">
+                <div class="name">每小时推送（8:00-20:00）</div>
+            </div>
+            <div class="set-item" :class="{'active':requestPar.pushType==3}" v-on:click="requestPar.pushType=3">
+                <div class="name">每日一次（9:00）</div>
+            </div>
+            <div class="set-item" :class="{'active':requestPar.pushType==-1}" v-on:click="requestPar.pushType=-1">
+                <div class="name">关闭推送</div>
+            </div>
+
+            <a  class="add-time btn-primary" v-on:click="updatePushType"> 
+                <span>保存</span>
+            </a>
+        </div>
+         <!-- 底部导航栏 -->
+        <vue-footer selecttab="我的"></vue-footer>
+    </div>
+</body>
+<script src="../scripts/flexible.js"></script>
+<script src="../scripts/zepto.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="../plugs/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/my/push_setting.js"></script>
+</html>

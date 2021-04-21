@@ -1,0 +1,51 @@
+.container {
+    box-sizing: border-box;
+    padding: 0.4rem 0;
+    .item {
+        display: flex;
+        box-sizing: border-box;
+        padding: 0 0.4rem;
+        .time {
+            font-size: 0.3733rem;
+            width: 1.0667rem;
+            text-align: right;
+            margin-right: 0.4rem;
+        }
+        .content {
+            padding-left: 0.4rem;
+            box-sizing: border-box;
+            flex: 1;
+            border-left: 0.0133rem solid #AFCFFF;
+            position: relative;
+            &::after {
+                content: "";
+                display: block;
+                width: 0.16rem;
+                height: 0.16rem;
+                background-color: #2C78E8;
+                position: absolute;
+                border-radius: 50%;
+                left: -0.08rem;
+                top:0;
+            }
+            .tag {
+                width:2.6667rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                // display: inline-block;
+                height:0.56rem;
+                background:rgba(236,244,255,1);
+                border-radius:0.04rem;
+                font-size: 0.3733rem;
+                color: #666666;
+            }
+            .name {
+                font-size: 0.3733rem;
+                text-align: justify;
+                margin-top: 0.2667rem;
+                padding-bottom: 0.6667rem;
+            }
+        }
+    }
+}

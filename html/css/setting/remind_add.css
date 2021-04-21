@@ -1,0 +1,157 @@
+.container {
+	background-color: #ECF4FF;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	padding-bottom: .4rem
+}
+
+.remind {
+	width: 100%;
+	color: #FFEED8;
+	background-color: #FFEED8;
+	color: #E77E2A;
+	height: .96rem;
+	line-height: .96rem;
+	text-align: center;
+	font-size: .29333rem;
+    font-weight:bold;
+}
+
+.list-box {
+	flex: 1;
+	overflow-y: scroll
+}
+
+.main {
+	background: #fff;
+	border-radius: 10px;
+	font-size: .3733rem;
+	display: flex;
+	flex-direction: column;
+	margin-top: .4rem;
+	box-sizing: border-box;
+	padding: 0 .4rem;
+	padding-bottom: .4rem
+}
+
+.main .handles {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: .3733rem;
+	margin-top: .4rem
+}
+
+.main .handles .btn {
+	width: 3.7333rem;
+	height: .8533rem;
+	background: #fff;
+	border: .0267rem solid #666;
+	border-radius: 5px;
+	color: #666666;
+	display: flex;
+	justify-content: center;
+	align-items: center
+}
+
+.main .handles .btn.delete {
+	margin-right: .4rem
+}
+
+.main .handles .btn.edit,.main .handles .btn.save {
+	color: #2C78E8;
+	border-color: #2C78E8
+}
+
+.main .item {
+	height: 1.2rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center
+}
+
+.main .item:nth-child(1),.main .item:nth-child(2) {
+	border-bottom: .0133rem solid #E6E6E6
+}
+
+.main .item .content {
+	flex: 1;
+	display: flex;
+	align-items: center
+}
+
+.main .item .content input {
+	height: 1.1333rem;
+	flex: 1;
+	border: 0 none;
+	outline: none;
+	text-align: right;
+	box-sizing: border-box;
+	padding-left: .4rem
+}
+
+.main .item .content span {
+	margin-left: .2667rem
+}
+
+.main .item .color-select {
+	width: 1.6667rem;
+	height: .6667rem;
+	background: #2c78e8
+}
+
+.main .color-box {
+	display: flex;
+	flex-wrap: wrap;
+	
+}
+
+.main .color-box .color-item {
+	width: 1.6rem;
+	height: .8rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: .5333rem;
+	margin-bottom: .5333rem
+}
+
+/* .main .color-box .color-item img {
+	display: none
+} */
+
+.main .color-box .color-item.active img {
+	display: block
+}
+
+.main .color-box .color-item:nth-child(4n) {
+	margin-right: 0
+}
+
+.main .color-box .color-item img {
+	width: .48rem;
+	height: .3333rem
+}
+
+.add-btn {
+	margin-top: .4rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 4.8rem;
+	height: 0.96rem;
+	background: #2c78e8;
+	border-radius: 5px;
+	font-size: .37333rem;
+	color: #ffffff
+}
+
+.add-btn img {
+	width: .32rem;
+	height: .32rem;
+	margin-right: .2667rem
+}
+/*# sourceMappingURL=./remind_add.css.map */

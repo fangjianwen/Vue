@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport" />
+    <title>添加提醒
+    </title>
+    <link rel="stylesheet" href="../css/common.css?v=1125" />
+    <link rel="stylesheet" href="../css/setting/remind_add.css?v=0113" />
+    <link href="../css/weui.css" rel="stylesheet" />
+    <style type="text/css">
+        .container {
+            display: inherit;
+        }
+
+        .main .item .content input {
+            font-size: .3733rem;
+        }
+
+        .add-btn {
+            margin: 1rem auto 0;
+        }
+        .main .color-box {
+           display:flexbox !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+
+        <div class="container">
+            <div class="remind">您可以自定义提醒，方便您管理已关注的项目</div>
+            <div class="bx">
+                <div class="main">
+                    <div class="item date">
+                        <div class="title">投标截止期之前</div>
+                        <div class="content">
+                            <input name="days" type="number" v-model="requestPar.days" class="days" placeholder="请输入" />
+                            <span>天</span>
+                        </div>
+                    </div>
+                    <div class="item content">
+                        <div class="title">提醒内容</div>
+                        <div class="content">
+                            <input name="text" type="text" v-model="requestPar.text" placeholder="请输入" />
+                        </div>
+                    </div>
+                    <div class="item color">
+                        <div class="title">选择配色</div>
+
+                        <div class="color-select"  v-bind:style="{ background: requestPar.color }" v-on:click="showSelectColor=!showSelectColor"></div>
+                    </div>
+                    <div class="color-box" style="display:none" v-show="showSelectColor">
+                        <div v-bind:style="{ background: item }"  class='color-item' v-on:click="colorSelect(item)" v-for="(item, index) in colorList">
+                            <img src='../images/setting/color_selected.png' alt='' v-show="requestPar.color==item">
+                        </div>
+                    </div>
+                </div>
+
+                <a class="add-btn" v-on:click="addRemind">
+                    <span>添加提醒</span>
+
+                </a>
+
+            </div>
+        </div>
+         <!-- 底部导航栏 -->
+        <vue-footer selecttab="我的"></vue-footer>
+
+    </div>
+
+</body>
+     <script src="../scripts/flexible.js"></script>
+<script src="../scripts/zepto.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="../plugs/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/my/remind_add.js?v=0113"></script>
+
+</html>

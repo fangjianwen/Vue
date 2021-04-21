@@ -1,0 +1,60 @@
+.container {
+    padding: 0 .4rem;
+}
+
+    .container .tab {
+        display: flex;
+        justify-content: space-between;
+        background-color: #ffffff;
+        font-size: .3733rem;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+        .container .tab .tab-item {
+            line-height: 1.0667rem;
+            color: #333333;
+            text-decoration: none;
+        }
+
+            .container .tab .tab-item.active {
+                border-bottom: .0133rem solid #2C78E8;
+                color: #2C78E8;
+            }
+
+.set-item {
+    font-size: .4267rem;
+    height: 1.4667rem;
+    border-bottom: 1px solid #E6E6E6;
+    display: flex;
+    align-items: center;
+    background-image: url(../../images/search/grey_arrow_right.png);
+    background-size: auto .3733rem;
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+    .set-item.active {
+        background-image: url(../../images/setting/set_active.png);
+        background-size: .48rem .3333rem;
+    }
+
+.add-time {
+    width: 4.8rem;
+    height: 1.1733rem;
+    background: #2c78e8;
+    border-radius: .5867rem;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .4267rem;
+    margin: 1.3333rem auto 0;
+}
+
+    .add-time img {
+        width: .32rem;
+        height: .32rem;
+        margin-right: .1333rem;
+    }
+/*# sourceMappingURL=./push_setting.css.map */

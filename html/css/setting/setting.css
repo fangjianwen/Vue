@@ -1,0 +1,132 @@
+.container {
+    padding: 0;
+    background-color: #ECF4FF;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab {
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffffff;
+    font-size: 0.42667rem;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 .4rem;
+}
+
+    .tab .tab-item {
+        padding:0.53333rem 0;
+        /* height: 0.4rem; */
+        line-height: 0.4rem;
+    }
+
+        .tab .tab-item.active {
+            border-bottom: 2px solid #297cf7;
+            color: #297cf7;
+        }
+
+.subscribe {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: .5333rem 0;
+    overflow: hidden;
+    padding-top: 0;
+}
+
+    .subscribe .list {
+        flex: 1;
+        overflow-y: scroll;
+        margin-bottom: .4rem;
+    }
+
+    .subscribe .content {
+        width: 9.2rem;
+        height: 6.7867rem;
+        background: #fff;
+        border-radius: .1333rem;
+        padding: .4rem;
+        box-sizing: border-box;
+        margin-top: .4rem;
+    }
+
+        .subscribe .content .title {
+            font-size: .3733rem;
+            padding-bottom: 0;
+            border-bottom: 1px solid #E6E6E6;
+        }
+
+            .subscribe .content .title input {
+                margin: 0!important;
+                border: 0 none;
+                padding: 0!important;
+            }
+
+        .subscribe .content .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: .3733rem;
+            height: 1.2rem;
+            border-bottom: .0133rem solid #E6E6E6;
+        }
+
+            .subscribe .content .list-item .select {
+                color: #999999;
+                background-image: url(../../images/search/grey_arrow_right.png);
+                background-repeat: no-repeat;
+                background-position: right center;
+                background-size: auto .3733rem;
+                padding-right: .4rem;
+            }
+
+        .subscribe .content .handles {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: .3733rem;
+            margin-top: .4rem;
+        }
+
+            .subscribe .content .handles .btn {
+                width: 3.7333rem;
+                height: .8533rem;
+                background: #fff;
+                border: .0267rem solid #666;
+                border-radius: 10px;
+                color: #666666;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+                .subscribe .content .handles .btn.delete {
+                    margin-right: .4rem;
+                }
+
+                .subscribe .content .handles .btn.edit, .subscribe .content .handles .btn.save {
+                    color: #2C78E8;
+                    border-color: #2C78E8;
+                }
+
+    .subscribe .subscribe-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: .4267rem;
+        width: 4.8rem;
+        height: 1.1733rem;
+        background-color: #2C78E8;
+        border-radius: 10px;
+        color: #ffffff;
+    }
+
+        .subscribe .subscribe-btn img {
+            width: .32rem;
+            height: .32rem;
+            margin-right: .2667rem;
+        }

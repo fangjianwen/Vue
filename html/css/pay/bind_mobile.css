@@ -1,0 +1,50 @@
+.container {
+  box-sizing: border-box;
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  padding-top: 0;
+}
+input[type=number],
+input[type=text] {
+  font-size: 0.4267rem;
+  padding: 0;
+  margin: 0;
+  line-height: normal;
+}
+.data-box .data-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.4267rem;
+  height: 1.4667rem;
+  box-sizing: border-box;
+  border-bottom: 0.0133rem solid #E5E5E5;
+  overflow: hidden;
+}
+.data-box .data-item .data-value {
+  flex: 1;
+  align-items: center;
+  box-sizing: border-box;
+  border: 0 none;
+  outline: none;
+  font-size: 0.4267rem;
+}
+.data-box .data-item .get-code {
+  height: 100%;
+  color: #2C78E8;
+  line-height: 1.4667rem;
+}
+.confirm {
+  width: 8.5333rem;
+  height: 1.1733rem;
+  background: #2c78e8;
+  border-radius: 0.5867rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.4267rem;
+  color: #ffffff;
+  margin-top: 1.3333rem;
+}

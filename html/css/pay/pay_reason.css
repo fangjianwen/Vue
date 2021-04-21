@@ -1,0 +1,157 @@
+.container {
+  /*display: flex;
+  flex-direction: column;*/
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0.4rem;
+  overflow: hidden;
+  padding:2.5rem 0 0 0;
+}
+.cover {
+  flex: 1;
+  width: 100%;
+  overflow-y: scroll;
+}
+.cover img {
+  width: 100%;
+  height: auto;
+}
+.order-list {
+  white-space: nowrap;
+  width: 100%;
+  /*height: 4.88rem;*/
+  overflow-y: hidden;
+  overflow-x: scroll;
+  /*margin-top: 0.4533rem;*/
+  padding:0 0.4rem;
+}
+.order-list .order-item {
+  margin-right: 0.1rem;
+  padding: 0.4rem;
+  display: inline-block;
+  width: 4rem;
+  height: 4.88rem;
+  background: #ffffff;
+  border-radius: 0.1333rem;
+  text-align: center;
+  box-sizing: border-box;
+  position: relative;
+  background-image: url(../../imgs/order/orderitem.png);
+  background-size:100% 100%;
+  padding-top:0.6rem;
+}
+.order-list .order-item .tag {
+  line-height: 0.55rem;
+  height: 0.55rem;
+  font-size:0.28rem;
+  color:#fff;
+  background-size: 100% 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.order-list .order-item .tag_long {
+    background-image: url(../../imgs/order/chang.png);
+    width: 3rem;
+}
+.order-list .order-item .tag_short {
+    background-image: url(../../imgs/order/duan.png);
+    width: 2rem;
+}
+.order-list .order-item .name {
+  font-size: 0.4267rem;
+  font-weight: 600;
+}
+.order-list .order-item .single-price {
+  width: 2rem;
+  height: 0.5067rem;
+  height: auto;
+  background: #ecf4ff;
+  border-radius: 0.2133rem;
+  text-align: center;
+  font-size: 0.32rem;
+  color: #999999;
+  margin: 0 auto;
+  margin-top: 0.1333rem;
+}
+.order-list .order-item .price-box {
+  display: flex;
+  align-items: center;
+  font-size: 0.32rem;
+  justify-content: center;
+  margin-top: 0.4rem;
+  border-bottom: 0.0133rem solid #E6E6E6;
+  padding-bottom: 0.4rem;
+}
+.order-list .order-item .price-box .price-origin {
+  color: #999999;
+  text-decoration: line-through;
+  margin-right: 0.12rem;
+}
+.order-list .order-item .price-box .price-save {
+  color: #FB7940;
+}
+.order-list .order-item .price {
+  font-size: 0.4867rem;
+  /*color: #FB7940;*/
+  margin-top: 0.2667rem;
+  font-weight:bold;
+}
+.order-list .order-item .buy-btn {
+  margin: 0 auto;
+  margin-top: 0.45rem;
+  margin-bottom:0.42rem;
+  display: flex;
+  color: #ffffff;
+  justify-content: center;
+  align-items: center;
+  width: 2.1333rem;
+  height: 0.64rem;
+  background: #EB5648;
+  border-radius: 0.32rem;
+  font-size: 0.3733rem;
+  text-decoration: none;
+}
+.order-line{height:0px;border-bottom:1px solid #E6E6E6}
+.order-info{padding-top:0.35rem;text-align:center;font-size:0.3rem;color:#626262;}
+.order-info p{margin-bottom:0.1rem;white-space:normal;}
+.order-info .tips{color:#eb5648;margin-top:0.35rem;white-space:normal;}
+ .product_name{font-size:0.5rem;font-weight:bold;margin-bottom:0.4rem;
+font-family: PingFang SC;}
+        .order-list .order-item .name{font-size:0.416rem;font-weight:normal;margin-bottom:0.15rem;}
+        .order-list,.order-list .order-item{height:auto;}
+        .cover{background:#F1F6FE;padding: 0.3rem 0.2rem;}
+        .container{background:url('/static/imgs/order/head.png') no-repeat;background-size:contain;padding-top: 2.5rem;padding-bottom:0;}
+        .qy_list{width:11.7rem;}
+        .qy_item{width:3.5rem;height:5.93rem;display:inline-block;}
+        .qy_item_fhy{background:url('/static/imgs/order/sm1.png') no-repeat;background-size:contain;}
+        .qy_item_hy{background:url('/static/imgs/order/sm2.png') no-repeat;background-size:contain;}
+        .qy_item_zzfw{background:url('/static/imgs/order/sm3.png') no-repeat;background-size:contain;}
+        .qy_item_line{display:flex;justify-content: space-between;}
+        .qy_item_line .selected {display: flex;align-items: center;}
+        .qy_item_line .selected .more {width: 0.27rem;height: 0.24rem;background-image: url(/static/imgs/order/gou.png);background-size: 100% 100%;}
+        .qy_item_line .selected .more.x {background-image: url(/static/imgs/order/x.png);background-size: 100% 100%;}
+        .qy_item_list{padding:0rem 0.4rem 0 0.3rem;color:#333;font-size: 0.32rem;}
+        .qy_item_line{margin-bottom:0.1rem;}
+        .color1{color:#3A81F5;}.color2{color:#975A3C;}.color3{color:#6A2315;}
+        .qy_hr{height:1px;border-bottom:1px solid #E6E6E6;margin:0.2rem 0;}
+        .huadong{width:100%;text-align:center;margin-top: 0.25rem;color:#333;font-size:0.3rem;cursor:pointer;}
+        .huadong img{width:0.4rem;margin-left:0.3rem;}
+        .qy_list_outer{width:100%;overflow-x:scroll;}
+        .btn_contact{height:0.8rem;text-align:center;color:#fff;
+                     margin:0.3rem 0 0.1rem;line-height:0.8rem;font-size:0.4rem;padding:0 0.4rem;}
+        .btn_contact a{display:block;background:#2c78e8;border-radius:0.1rem;}
+
+.type-choose{font-size:0.4rem;margin-top:0.4rem;display:flex;justify-content: space-between;}
+       .type-choose-item{width:48%;padding:0.2rem 0;text-align:center;}
+       .type-choose-item.fl{float:left;}
+       .type-choose-item.fr{float:right;}
+       .type-choose-item.active{background:#EB5648;border:1px solid #EB5648;color:#fff;}
+      
+       .type-choose{padding:0.5rem 0.4rem;background:#fff;}
+       .type-choose-btns{width:80%;margin:0 auto;border:1px solid #AAAAAA;border-radius:4px;position:relative;}
+       .type-choose-btns .tag{position:absolute;width:2rem;height:0.6rem;position:absolute;right:-1.2rem;top:-0.4rem;line-height:0.6rem;
+background-image: url(../../imgs/order/qltj.png);
+  background-size:100% 100%;
+  text-align:center;color:#fff;font-size:0.3rem;
+       }

@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport" />
+    <title>个人中心
+    </title>
+    <link href="../css/style.css?v=0111_1" rel="stylesheet" />
+</head>
+<body>
+
+    <div id="app" v-cloak>
+
+        <div class="toast"></div>
+        <div class="greybg" v-show="showMobile2Div"></div>
+        <div class="mobile_div" v-show="showMobile2Div" style="display:none">
+            <div class="mobile_input">
+                <!-- <input type="text"   /> -->
+                <textarea v-model="info.mobile2" class="mobileinput" placeholder="额外授权一个号码共享权限"></textarea>
+            </div>
+            <div class="mobile_btn" >
+                <div v-on:click="showMobile2Div=false">取消</div>
+                <div style="border-left:1px solid #e6e6e6;color:#2c78e8;" v-on:click="saveMobile2">保存</div>
+            </div>
+        </div>
+        <div class="container my_container">
+            <div class="user">
+                <div class="avatar">
+                    <img v-bind:src="info.avatar" alt="">
+                </div>
+                <div class="username">
+                    <div class="name">{{info.name}}</div>
+                    <div class="mobile">
+                        <span class="mobile1">{{info.mobile}}</span>
+                        <span class="mobile2" v-on:click="showMobile2Div=true"><img src="../images/my/add.png">{{info.mobile2 == ""?"额外授权一个号码共享权限":info.mobile2}}</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="home_list">
+                <div class="home_item">
+                    <div class="home_head">
+                        <div>付费订阅</div>
+                        <a class="home_head_right" href="subscription_list.html">全部设置</a>
+                    </div>
+                    <div class="home_icon_list for_bind_mobile">
+                        <a class="home_icon_item" href="subscription_list.html">
+                            <div class="home_icon">
+                                <img src="../images/my/dingyueshezhi.png" />
+                            </div>
+                            <div class="home_txt">订阅设置</div>
+                        </a>
+                        <a class="home_icon_item" href="push_setting.html">
+                            <div class="home_icon">
+                                <img src="../images/my/tuisongshezhi.png" />
+                            </div>
+                            <div class="home_txt">推送设置</div>
+                        </a>
+
+                        <a class="home_icon_item" href="push_history.html">
+                            <div class="home_icon">
+                                <img src="../images/my/dingyuelishi.png" />
+                            </div>
+                            <div class="home_txt">订阅内容</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="home_item">
+                    <div class="home_head">
+                        <div>我的订单</div>
+                        <a class="home_head_right" href="myorder.html">查看全部订单</a>
+                    </div>
+                    <div class="home_icon_list">
+                        <a class="home_icon_item" href="../pay/product.html">
+                            <div class="home_icon">
+                                <img src="../images/my/goumaishengji.png" />
+                            </div>
+                            <div class="home_txt">购买升级</div>
+                        </a>
+                        <a class="home_icon_item" href="myorder.html?typeId=1">
+                            <div class="home_icon">
+                                <img src="../images/my/daishenhe.png" />
+                            </div>
+                            <div class="home_txt">待审核</div>
+                        </a>
+                        <a class="home_icon_item" href="myorder.html?typeId=2">
+                            <div class="home_icon">
+                                <img src="../images/my/yizhifu.png" />
+                            </div>
+                            <div class="home_txt">已支付</div>
+                        </a>
+
+                        <a class="home_icon_item" href="myorder.html">
+                            <div class="home_icon">
+                                <img src="../images/my/shenqingfapiao.png" />
+                            </div>
+                            <div class="home_txt">申请发票</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="home_item">
+                    <div class="home_head">
+                        <div>我的关注</div>
+                        <a class="home_head_right" href="follow_project_list.html">查看全部关注</a>
+                    </div>
+                    <div class="home_icon_list">
+                        <a class="home_icon_item" href="follow_statistics_list.html">
+                            <div class="home_icon">
+                                <img src="../images/my/guanzhulaiyuan.png" />
+                            </div>
+                            <div class="home_txt">关注来源</div>
+                        </a>
+                        <a class="home_icon_item" href="follow_project_list.html">
+                            <div class="home_icon">
+                                <img src="../images/my/guanzhuxiangmu.png" />
+                            </div>
+                            <div class="home_txt">关注项目</div>
+                        </a>
+                        <a class="home_icon_item" href="remind_list.html">
+                            <div class="home_icon">
+                                <img src="../images/my/tixingshezhi.png" />
+                            </div>
+                            <div class="home_txt">提醒设置</div>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div class="home_item">
+
+                    <div class="home_line_list">
+                        <a class="home_line_item" href="tel:182-1076-2747">
+                            <div class="home_line_icon">
+                                <img src="../images/my/quanqiudingyue.png" />全球订阅
+                            </div>
+                            <div class="home_line_arrow"></div>
+                        </a>
+                        <a class="home_line_item item_wechat">
+                            <div class="home_line_icon">
+                                <img src="../images/my/sirendingzhi.png" />私人定制
+                            </div>
+                            <div class="home_line_arrow"></div>
+                        </a>
+                        <a class="home_line_item" href="tel:182-1076-2747">
+                            <div class="home_line_icon">
+                                <img src="../images/my/shujukufuwu.png" />数据库服务
+                            </div>
+                            <div class="home_line_arrow"></div>
+                        </a>
+                        <a class="home_line_item" href="tel:182-1076-2747">
+                            <div class="home_line_icon">
+                                <img src="../images/my/kefu.png" />客服
+                            </div>
+                            <div class="home_line_arrow"></div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 后台返回的弹窗图片 -->
+        <div class="code-modal" v-show="showQrCode" style="display:none;">
+            <div class="content">
+                <div class="title">
+                    <div class="delete cancel"></div>
+                </div>
+                <img class="code" src="../images/search/code.jpg" alt="">
+                <div class="btn cancel">
+                    长按上方二维码<br />
+                    扫描进入《掘世联盟-私人订制》
+                </div>
+            </div>
+        </div>
+
+        <div class="help-modal" v-show="info.mobile==''" style="display:none;">
+           
+            <div class="content mobilecontent">
+                <div class="text">亲爱的用户，为了更好的使用订阅相关服务，请先绑定手机号码。</div>
+                <a class="btn close" href="bind_mobile.html?ReturnUrl=../my/home.html">前往绑定</a>
+            </div>
+        </div>
+         <vue-footer selecttab="我的"></vue-footer>
+    </div>
+
+</body>
+<script src="../scripts/flexible.js"></script>
+<script src="../scripts/zepto.min.js"></script>
+<script src="../scripts/vue.js"></script>
+<script src="../plugs/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="../scripts/comm.js"></script>
+<script src="../scripts/my/home.js"></script>
+
+</html>

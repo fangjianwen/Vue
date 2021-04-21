@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="UTF-8">
+    <meta content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport">
+    <title>付费订阅</title>
+    <link rel="stylesheet" href="../css/style.css?v=0111_2">
+    <style>
+         .city-select {
+           background-color: #297cf7;
+           color:white !important;
+        }
+        .select-title {
+           color:black;
+           font-weight:normal;
+           font-size:12px;
+           color:#999999;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+    <div class="container containerbase containeredit" v-show="base_container_show">
+        <div class="subscribe">
+            <div class="list">
+                <div class="content">
+                    
+                    <div class="title">
+                        <input  class="title-value"  type="text" placeholder="请输入标题" />
+                    </div>
+                    <div class="list-item region">
+                        <div class="cat">地区</div>
+                        <div class="select" v-on:click="showAreaSelect" style="color:#2C78E8;max-height:3rem;overflow-y:scroll;">                           
+                            <!-- <div v-if="requestPar.id==''||(selectCity.length>0||selectDist.length>0||selectPlatm.length>0)">
+                            <span v-if="selectCity.length>0||selectDist.length>0||selectPlatm.length>0">
+                               <label class="select-title" v-show="selectCity.length>0">已选城市:</label>{{selectCity.join(',')}}
+                               <br v-show="selectCity.length>0"/><label class="select-title" v-show="selectDist.length>0">已选区域:</label>{{selectDist.join(',')}}
+                               <br v-show="selectDist.length>0"/> <label class="select-title" v-show="selectPlatm.length>0"> 已选平台:</label>{{selectPlatm.join(',')}}
+                            </span>
+                             <span v-if="selectCity.length==0&&selectDist.length==0&&selectPlatm.length==0">
+                                 全国
+                            </span>
+                            </div>
+                              <div v-if="requestPar.id!=''&&(selectCity.length==0&&selectDist.length==0&&selectPlatm.length==0)">
+                                  {{subscriptionInfo.region}}
+                              </div> -->
+                              {{region_result}}
+                        </div>                        
+                    </div>
+                    <div class="list-item cate">
+                        <div class="cat">行业</div>
+                        <div class="select" v-on:click="type_container_show=true;base_container_show=false;">{{type_result}}</div>                        
+                    </div>
+                    <div class="list-item add-keywords">
+                        <div class="cat">标题关键字</div>
+                        <div class="select keywordsbtn" v-on:click="keywords_show=true">{{keywords_result}}</div>                        
+                    </div>
+                </div>
+            </div>   
+            <div class="greybg" v-show="keywords_show" style="display:none;"></div>
+            <div class="keywords_tbb" v-show="keywords_show" style="display:none;">
+                <div class="content" style="height:auto;">
+                    <div class="title">已选关键字</div>
+                    <div class="keywords selected">
+                        <div class="keyword" v-for="(item, index) in keywordsList">
+                            <span class="value">{{item}}</span>
+                            <span class="delete" v-on:click="deleteKeyword(index)"></span>
+                        </div>
+                    </div>
+                    <div class="add-keyword" style="width:auto;">
+                        <img src="../images/setting/plus.png" alt="">
+                        <input class="txt_keyword" type="text" placeholder="请输入关键字" style="height:auto;">
+                        <div class="add-btn" v-on:click="addKeyword()">添加</div>
+                    </div>
+                    <div class="title all">全部关键字</div>
+                    <div class="keywords all">
+                    </div>
+                    <div class="handles">
+                          <a class="btn edit keywordsedit" v-on:click="confirmKeyword()">确定</a>
+                    </div>
+                </div>
+            </div>         
+            
+                <a class="subscribe-btn" v-on:click="saveClick()" ><span>保存订阅</span></a>
+            
+        </div>
+    </div>
+
+         <!-- 地区 -->
+        <div class="container containerselect" v-show="region_container_show==true">
+         <div class="search-modal search-modal-1" >
+            <div  class="modal modal-1">
+                  <div class="main mainsharp maindistrict">
+                    <div class="level1 level-box">
+                        <div class="name"  v-for="(item, index) in areaListLevel1"  :class="{'active':areaSelectIndexLeve11==item.id}" v-on:click="areaLevelClick(item,1)">{{item.name}}</div>
+                        <a class="name"    href="tel:182-1076-2747">全球订阅</a>
+                    </div>
+
+                     <!-- 地区选择-->
+                   <div class="level2 level-box" >
+                        <div class="name" v-for="(item, index) in areaListLevel2"  :class="{'active':areaSelectIndexLeve12==item.id}" v-on:click="areaLevelClick(item,2)">{{item.name}}</div>
+                    </div>
+
+                    <div class="level3 level-box" >
+                        <div class="name" v-for="(item, index) in areaListLevel3"  :class="{'active':areaSelectIndexLeve13==item.id}" v-on:click="areaLevelClick(item,3)">{{item.name}}</div>
+                    </div>
+
+                    <div class="level4 level-box" >
+                   <div class="name" v-for="(item, index) in areaListLevel4"  :class="{'active':areaSelectIndexLeve14==item.id}" v-on:click="areaLevelClick(item,4)" v-bind:data-city-id="item.id">{{item.name}}</div>
+                   
+                    </div>
+
+                    <div class="level5 level-box" >
+                        <div class="item level-item-5" v-for="(item, index) in areaListLevel5" v-bind:data-dist-id="item.id" v-bind:data-dist-name="item.name"  v-bind:data-dist-parentid="item.parent_id"  v-bind:data-dist-parentname="item.parent_name"> 
+                            <div class="name">{{item.name}}</div>
+                             <div class="icon"></div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div id="handles" class="handles">
+                    <div class="select-all reset" v-on:click="clearAreaSearch">重置</div>
+                    <div class="confirm" v-on:click="setAreaConfirm">确认</div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+         <!-- 行业 -->
+        <div class="container containerselectcate" v-show="type_container_show">
+             <div class="search-modal search-modal-5" style="overflow: hidden;">
+                <div index="5" id="modal-box-2" class="modal modal-1">
+                    <div id="main-2" class="main mainsharp">                        
+                    <div class="level5 level-box level-cate">
+                        
+                            <div class="item level-item-5 show" :class="{'active':selecttdDealTypeList.includes(parseInt(item.id))}"  v-for="(item, index) in dealTypeList" v-bind:data-typeid-id="item.id" v-bind:data-typeid-name="item.name"> 
+                                <div class="name">{{item.name}}</div> 
+                                <div class="icon"></div> 
+                        </div>   
+                        
+                        </div>
+                    </div>
+                    <div class="handles">
+                        <div class="select-all reset" v-on:click="clearTypeId">重置</div>
+                        <div class="confirm" v-on:click="setTypeId">确认</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    <vue-footer selecttab="我的"></vue-footer>
+    </div>
+
+   
+    <script src="../scripts/flexible.js"></script>
+    <script src="../scripts/zepto.min.js"></script>
+    <script src="../scripts/vue.js"></script>
+    <script src="../plugs/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <script src="../scripts/comm.js"></script>
+    <script src="../scripts/my/subscription.js?v=0114"></script>
+      
+    
+    <script>
+
+        $('[data-dist-id]').live('click', function () {// 区域点击
+
+            var ischeck = $(this).hasClass("active");
+            if (!ischeck) {
+                $(this).addClass("active");
+                var value = $(this).data("dist-id");
+                if (value.toString().indexOf("all") > -1) {
+
+                    $('[data-dist-id]').each(function () {
+
+                        $(this).addClass("active");
+
+
+
+                    })
+                } else {
+
+                    var isCheckAll = true;
+                    $('[data-dist-id]').each(function () {
+                        if ((!$(this).hasClass("active"))) {
+                            if (($(this).data("dist-id").toString().indexOf("all") <= -1)) {
+                                isCheckAll = false;
+
+                            }
+
+                        }
+
+
+
+                    })
+                    if (isCheckAll) {
+
+                        $('[data-dist-id]').each(function () {
+
+                            if ($(this).data("dist-id").toString().indexOf("all") > -1) {
+                                $(this).addClass("active");
+
+                            }
+
+
+
+                        })
+                    }
+
+
+                }
+
+
+
+            }
+            else {
+
+
+                $(this).removeClass("active");
+                //$('[data-distid-id]')[0].removeClass("active");
+                $('[data-dist-id]').each(function () {
+                    if ($(this).data("dist-id").toString().indexOf("all") > -1) {
+                        $(this).removeClass("active");
+                    }
+
+
+                })
+
+                if ($(this).data("dist-id").toString().indexOf("all") > -1) {
+                    $('[data-dist-id]').each(function () {
+
+                        $(this).removeClass("active");
+
+
+
+                    })
+                } else {
+
+                }
+            }
+            var haveSelect = false;
+            if (vm.areaLevel2Name != "央企招采") {//选中区域
+
+                var cityId = "";
+                var cityName = "";
+                $('[data-dist-id]').each(function () {
+                    cityId = $(this).data("dist-parentid");
+                    cityName = $(this).data("dist-parentname");
+                    var distId = $(this).data("dist-id");
+                    var distName = $(this).data("dist-name");
+                    if (distId == "all_492") {
+                        distName = "国家级项目";
+                    }
+                    if ($(this).hasClass("active")) {
+                        haveSelect = true;
+                        //if (distId.toString().indexOf("all")<=-1) {
+                        if (vm.selectDistIds.indexOf(distId) == -1) {
+                            vm.selectDistIds.push(distId);
+                            if (distName != "全部") {
+                                vm.selectDist.push(distName);
+                            }
+
+                        }
+
+                        // }
+
+                    } else {
+                        if (vm.selectDistIds.indexOf(distId) > -1) {
+                            vm.selectDistIds.splice(vm.selectDistIds.indexOf(distId), 1);
+                            vm.selectDist.splice(vm.selectDist.indexOf(distName), 1);
+                        }
+
+
+                    }
+
+
+                })
+                if (haveSelect) {
+                    if (vm.selectCityIds.indexOf(cityId) == -1) {
+
+                        vm.selectCityIds.push(cityId);
+                        vm.selectCity.push(cityName);
+                    }
+
+
+                } else {
+                    if (vm.selectCityIds.indexOf(cityId) > -1) {
+                        vm.selectCityIds.splice(vm.selectCityIds.indexOf(cityId), 1);
+                        vm.selectCity.splice(vm.selectCity.indexOf(cityName), 1);
+
+                    }
+                }
+            }
+            else {//选中平台
+
+                $('[data-dist-id]').each(function () {
+
+                    var distId = $(this).data("dist-id");
+                    var distName = $(this).data("dist-name");
+                    if ($(this).hasClass("active")) {
+                        haveSelect = true;
+
+                        if (vm.selectPlatmIds.indexOf(distId) == -1) {
+                            vm.selectPlatmIds.push(distId);
+                            if (distName != "全部") {
+                                vm.selectPlatm.push(distName);
+                            }
+
+                        }
+
+                        // }
+
+                    } else {
+                        if (vm.selectPlatmIds.indexOf(distId) > -1) {
+                            vm.selectPlatmIds.splice(vm.selectPlatmIds.indexOf(distId), 1);
+                            vm.selectPlatm.splice(vm.selectPlatm.indexOf(distName), 1);
+                        }
+
+
+                    }
+
+
+                })
+
+            }
+
+
+
+
+            //
+
+
+            //
+
+
+
+        })//省市县
+
+      
+
+
+        // setInterval(function () {//选中地区还原
+
+        //     switch (vm.areaLevel1Name) {
+        //         case "HOT热点":
+        //             $('[data-distidhot-id]').removeClass("active");
+        //             $('[data-cityidhot-id]').removeClass("city-select");
+        //             break;
+        //         case "国家级":
+        //             break;
+        //         case "省市县":
+        //             $('[data-distid-id]').removeClass("active");
+        //             $('[data-cityid-id]').removeClass("city-select");
+        //             break;
+        //         default:
+
+        //     }
+
+        //     vm.restoreSelectDist();//还原选中区域
+        //     vm.restoreSelectCity();//还原选中城市
+
+        //     //console.log("vm.selectCityIds", vm.selectCityIds);
+        //     //console.log("vm.selectDistIds", vm.selectDistIds);
+        //     //console.log("vm.selectPlatmIds", vm.selectPlatmIds);
+        // }, 200);
+        // var typeVar = setInterval(function () {
+            
+        //     if($('[data-typeid-id]').length > 0){
+        //         vm.setDealTypeStutus();
+        //         clearInterval(typeVar);
+        //     }
+        // }, 200);
+        function clearName(name){
+            if (vm.selectDist.indexOf(name) > -1) { 
+                vm.selectDist.splice(vm.selectDist.indexOf(name), 1);
+            }
+            if (vm.selectCity.indexOf(name) > -1) { 
+                vm.selectCity.splice(vm.selectCity.indexOf(name), 1);
+            }
+            if (vm.selectPlatm.indexOf(name) > -1) { 
+                vm.selectPlatm.splice(vm.selectPlatm.indexOf(name), 1);
+            }
+        }
+        setInterval(function () {//选中还原
+
+            $('[data-dist-id]').removeClass("active");
+            $('[data-city-id]').removeClass("city-select");
+            vm.restoreSelectDist();//还原选中区域
+            vm.restoreSelectCity();//还原选中城市
+            vm.restoreSelectPlat();//还原选中平台
+            //console.log("vm.selectCityIds", vm.selectCityIds);
+            //console.log("vm.selectCityIds", vm.selectDistIds);
+            //console.log("vm.selectPlatmIds", vm.selectPlatmIds);
+        }, 500);
+ </script>
+</body>
+</html>
